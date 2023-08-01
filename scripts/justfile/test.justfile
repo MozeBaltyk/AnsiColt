@@ -24,7 +24,7 @@ _setup_repo_cmd repository:
         # Setup command to eval
         CMD="${VAR_REPO_HOST}={{repository}} ${CLI_REPO}"
         #https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps#available-scopes
-        OPTIONS="-s read:project,repo,write:packages,read:org"
+        OPTIONS="-s read:project,repo,write:packages,read:org,workflow"
     elif [[ "$repository_type" == "GitLab" ]]; then
         VAR_REPO_HOST="GLAB_HOST"
         CLI_REPO="glab"

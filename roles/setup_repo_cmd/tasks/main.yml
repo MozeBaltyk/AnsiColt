@@ -22,7 +22,7 @@
       VAR_REPO_HOST: "GH_HOST"
       CLI_REPO: "gh"
       CONFIG_REPO: "$HOME/.config/gh"
-      RIGHTS: "-s read:project,repo,write:packages,read:org"
+      RIGHTS: "-s read:project,repo,write:packages,read:org,workflow"
   - name: Setup command to eval
     set_fact:
       CMD: "{{ VAR_REPO_HOST }}={{target_repository}} {{CLI_REPO}}"
