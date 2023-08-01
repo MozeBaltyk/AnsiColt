@@ -1,0 +1,50 @@
+### REQUIRED
+namespace: MozeBaltyk
+
+name: AnsiColt
+
+version: 1.0.1
+
+readme: README.md
+
+authors:
+  - morze.baltyk@proton.me
+
+
+### OPTIONAL but strongly recommended
+description: >
+  Collection to start an Ansible Collection
+
+license:
+- Apache-2.0
+
+license_file: 'LICENSE'
+
+tags: 
+  - devops
+  - tools
+  - collection
+  - ansible
+  - development
+
+dependencies: {}
+
+repository: https://github.com/MozeBaltyk/AnsiColt
+
+documentation: https://github.com/MozeBaltyk/AnsiColt/README.md
+
+homepage: https://github.com/MozeBaltyk/AnsiColt
+
+issues: https://github.com/MozeBaltyk/AnsiColt/issues
+
+build_ignore:
+  - .gitignore
+  - '.*.swp' 
+  - .govmomi 
+  - '.terraform*'
+  - 'terraform.tfstate*'
+  - .DS_Store
+  - .vscode
+  - '.*.tar.gz'
+  - '*.zip'
+

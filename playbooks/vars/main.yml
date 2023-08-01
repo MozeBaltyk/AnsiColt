@@ -1,0 +1,7 @@
+---
+global_collection_namespace: "{{ namespace }}"
+global_collection_name: "{{ project | default('') }}"
+global_author_email: "{{ email | default('') }}"
+global_collection_description: "{{ description | default('') }}"
+global_target_repository: "{{ repository | default('github.com') }}"
+global_role_name: "{{ role | default('') }}"

@@ -1,0 +1,22 @@
+name: "release"
+on:
+  release:
+    types:
+      - created
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      ANSIBLE_GALAXY_TOKEN: ${{ secrets.ANSIBLE_GALAXY_TOKEN }}
+      ANSIBLE_FORCE_COLOR: 1
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v1
+ 
+      - name: Install AnsiColt
+        run: |
+          ./scripts/prerequis all
+ 
+      - name: Run galaxy deployment 
+        run: >-
+          ansible-playbook -i 'localhost,' playbooks/tasks/galaxyDeploy.yml -e "github_tag=${{ github.ref }}"

@@ -1,0 +1,3 @@
+---
+# defaults file for connect_to_repository
+connect_repository: "{{ global_target_repository }}"

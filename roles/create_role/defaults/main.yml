@@ -1,0 +1,12 @@
+---
+# defaults file for createRole:
+collection_name:        "{{ global_collection_name }}"
+collection_namespace:   "{{ global_collection_namespace }}"
+project_path:           "$HOME/{{ collection_namespace }}/{{ collection_name }}"
+
+new_role_name:          "{{ global_role_name | default('') }}"
+new_role_path:          "{{ project_path }}/roles/{{ new_role_name }}"
+
+new_role_description:   "{{ global_role_description | default('') }}"
+new_role_author_email:  "{{ global_author_email | default('') }}"
+new_role_licence_spdx:  "{{ global_licence_spdx | default('Apache-2.0') }}"

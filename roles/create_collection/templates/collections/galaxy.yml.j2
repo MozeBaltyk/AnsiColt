@@ -1,0 +1,42 @@
+### REQUIRED
+namespace: {{ collection_namespace }}
+name: {{ collection_name }}
+version: {{ collection_version }}
+
+readme: README.md
+
+authors:
+  - {{ collection_author_email }}
+
+### OPTIONAL but strongly recommended
+description: >
+  {{ collection_description }}
+
+license:
+- {{ collection_licence_spdx }}
+
+license_file: 'LICENSE'
+
+tags: 
+  - devops
+  - collection 
+  - ansible
+
+dependencies: {}
+
+repository: https://{{ collection_repository }}/{{ collection_namespace }}/{{ collection_name }}
+documentation: https://{{ collection_repository }}/{{ collection_namespace }}/{{ collection_name }}/README.md
+homepage: https://{{ collection_repository }}/{{ collection_namespace }}/{{ collection_name }}
+issues: https://{{ collection_repository }}/{{ collection_namespace }}/{{ collection_name }}/issues
+
+build_ignore:
+  - .gitignore
+  - '.*.swp' 
+  - .govmomi 
+  - '.terraform*'
+  - 'terraform.tfstate*'
+  - .DS_Store
+  - .vscode
+  - '.*.tar.gz'
+  - '*.zip'
+

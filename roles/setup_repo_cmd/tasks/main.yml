@@ -1,0 +1,41 @@
+---
+# tasks file for setup_repo_cmd
+
+# Not working anymore for Gitlab: 
+#   repository_type=$(curl -Lis https://{{ repository }}/ | awk '/<title>.*GitHub<\/title>/ || /<title>.*GitLab<\/title>/ {sub(/<\/title>/,"");print $NF}' || echo "unknown")
+
+- name: Figure out which repo
+  shell: >
+    curl -Lis https://{{ target_repository }}/ 
+    | egrep -oi "<title>.*GitHub<\/title>|<title>.*GitLab<\/title>" 
+    | awk '{sub(/<\/title>/,"");print $NF}' 
+    || echo "unknown repo"
+  register: repo_type_found
+
+- name: Set var repository_type
+  set_fact:
+    repository_type: "{{ repo_type_found['stdout'] }}"
+
+- block:
+  - name: Set vars for GitHub
+    set_fact:
+      VAR_REPO_HOST: "GH_HOST"
+      CLI_REPO: "gh"
+      CONFIG_REPO: "$HOME/.config/gh"
+      RIGHTS: "-s read:project,repo,write:packages,read:org"
+  - name: Setup command to eval
+    set_fact:
+      CMD: "{{ VAR_REPO_HOST }}={{target_repository}} {{CLI_REPO}}"
+  when:  repository_type == "GitHub"
+
+- block:
+  - name: Set vars for GitLab
+    set_fact:
+      VAR_REPO_HOST: "GLAB_HOST"
+      CLI_REPO: "glab"
+      CONFIG_REPO: "$HOME/.config/glab-cli"
+      RIGHTS: ""
+  - name: Setup command to eval
+    set_fact:
+      CMD: "{{ VAR_REPO_HOST }}={{target_repository}} {{CLI_REPO}}"
+  when:  repository_type == "GitLab"

@@ -1,0 +1,15 @@
+---
+# .ansible-lint
+exclude_paths:
+  - .git/
+  - .gitignore
+  - Makefile
+  - .cache/
+  - .github/
+  - molecule/
+  - docs/
+  - .ansible-lint
+  - .yamllint
+  
+skip_list:
+  - yaml[line-length]

@@ -1,0 +1,9 @@
+- hosts: '{{target|default("localhost")}}'
+  connection: local
+  gather_facts: false
+
+  vars_files:
+    - ../vars/main.yml
+
+  roles:
+  - {role: connect_to_repository,  }

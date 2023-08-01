@@ -1,0 +1,8 @@
+.*.swp
+.govmomi
+.terraform*
+.vscode
+terraform.tfstate*
+# Galaxy artifacts.
+*.tar.gz
+*.zip

@@ -1,0 +1,13 @@
+- name: Initialize a new role
+  command: >
+    ansible-galaxy role init --offline --init-path={{ project_path }}/roles {{ new_role_name }}
+  args: 
+    creates: "{{ new_role_path }}"
+
+- name: Push templates in role path
+  template: 
+    src:  '{{ item.src }}'
+    dest: '{{ item.dest }}'
+  loop:
+    - { src: 'meta/main.yml.j2',   dest: '{{ new_role_path }}/meta/main.yml' }
+    - { src: 'README.md.j2',       dest: '{{ new_role_path }}/README.md'     }

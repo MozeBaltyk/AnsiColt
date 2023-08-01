@@ -1,0 +1,50 @@
+- hosts: '{{target|default("localhost")}}'
+  connection: local
+  gather_facts: false
+
+  vars_files:
+    - ../vars/main.yml
+
+  pre_tasks:
+  # Email Authors for both collection and roles
+  - block:
+      - name: Give an email to ansible collection 
+        pause:
+          prompt: "Please give an email that we can set as author of this collection (if empty, take as default from the git config global)"
+        register: prompt_email
+
+      - name: Set authors email
+        set_fact:
+          global_author_email: "{{ prompt_email['user_input'] }}"
+        when: prompt_email['user_input']|length != 0
+
+      - block:
+          - name: Get User.Email from git global config to define authors of the collection
+            shell: "git config --global user.email"
+            register: gitconfig_email
+      
+          - name: Set authors email from git config
+            set_fact:
+              global_author_email: "{{ gitconfig_email['stdout'] }}" 
+        when: prompt_email['user_input']|length == 0
+
+    when: (global_author_email is not defined) or (global_author_email|length == 0)
+    run_once: true
+
+  # Description for the role you want tp create 
+  - block:
+      - name: Set description to role 
+        pause:
+          prompt: "Please give a description to the role, you want to create"
+        register: prompt_description
+          
+      - name: Set description coming from prompt
+        set_fact:
+          global_role_description: "{{ prompt_description['user_input'] }}"
+
+    when: (global_role_description is not defined) or (global_role_description|length == 0)
+    run_once: true
+
+  roles:
+  - {role: create_role,        tags: role,   } 
+              
