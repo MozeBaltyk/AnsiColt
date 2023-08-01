@@ -20,7 +20,7 @@ Currently I see four main reasons:
 - Here, I can variabilize templates that I push 
 - This collection can be available in the Ansible-Galaxy Portal
 - Handle projects in Github and Gitlab, private or public
-- Handle several prject's workflow (local, remote, blank).
+- Handle several project's workflow (local, remote, blank).
 
 Why do I need it, there is an Ansible-galaxy command for this ? 
 yes, but it does not:
@@ -29,6 +29,8 @@ yes, but it does not:
 - Bring a structure to handles dependencies of your collection and scripts to resolv them.
 - It also add somes extras customs scripts, linter, .gitignore and other tricks...
 - By default set your project with a License Apache-2.0 (to come later a menu with diverse type of license)
+- When cloning or creating projects, some good pratices are applied, like git config user in each project directory.    
+  Which avoid to push later on with the global which can be different. 
 
 Yes, You got it... It's an Ansible Collection to create an Ansible Collection, make sense! 
 
