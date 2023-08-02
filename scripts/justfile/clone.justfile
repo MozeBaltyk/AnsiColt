@@ -52,9 +52,10 @@ _clone project repository:
         #Could be also done with gh/glab repo clone 
         git clone https://{{repository}}/${project_lowercase}.git $HOME/${project_to_clone}
 
-        # Your Connexion user is set as git local user.name otherwise the push are going to be with your global user.
-        cd $HOME/${project_to_clone}; git config --local user.name ${user}
-        
+        # Set user/email in git local otherwise the push are going to be with your global user.
+        cd $HOME/${project_to_clone}; git config --local --replace-all user.name ${user}
+        cd $HOME/${project_to_clone}; git config --local --replace-all user.email ${email}
+
     elif (( $number_of_projects_found > 1 )); then
         project_found=$( eval "${CMD} repo list  | grep -iw "^.*/{{ project }}"" )
         printf "\e[1;31m[ERROR]\e[m There is several Project: {{ project }} which already exist in different namespace.\n"

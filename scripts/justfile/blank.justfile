@@ -88,8 +88,9 @@ _blank project type repository *group:
         #Could be also with gh/glab repo clone 
         git clone https://{{repository}}/${project_lowercase}.git ${project_path}
         
-        # Your Connexion user is set as git local user.name otherwise the push are going to be with your global user.
-        cd ${project_path}; git config --local user.name ${user}
+        # Set user/email in git local otherwise the push are going to be with your global user.
+        cd ${project_path}; git config --local --replace-all user.name ${user}
+        cd ${project_path}; git config --local --replace-all user.email ${email}
 
         printf "\e[1;32m[OK]\e[m Project ${project_to_create} successfully created on {{repository}},\n"
         printf "     and present on localhost:${project_path} with git config user.name equal to ${user}. \n"
