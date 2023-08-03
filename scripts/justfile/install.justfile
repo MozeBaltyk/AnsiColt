@@ -12,6 +12,8 @@ _install project repository *version:
         VAR_REPO_HOST="GH_HOST"
         CLI_REPO="gh"
         CONFIG_REPO="$HOME/.config/gh"
+        CONFIG_FILE="${CONFIG_REPO}/hosts.yml"
+        YQ_SEARCH=".\"{{repository}}\".email"
         # Setup command to eval
         CMD="${VAR_REPO_HOST}={{repository}} ${CLI_REPO}"
         #https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps#available-scopes
@@ -20,11 +22,13 @@ _install project repository *version:
         VAR_REPO_HOST="GLAB_HOST"
         CLI_REPO="glab"
         CONFIG_REPO="$HOME/.config/glab-cli"
+        CONFIG_FILE="${CONFIG_REPO}/config.yml"
+        YQ_SEARCH=".hosts.\"{{repository}}\".email"
         # Setup command to eval
         CMD="${VAR_REPO_HOST}={{repository}} ${CLI_REPO}"
         OPTIONS=""
     else
-        printf "\e[1;31m[ERROR]\e[m unknown repository.\n"
+        printf "\e[1;31m[ERROR]\e[m unknown repository or not reachable.\n"
         exit 1
     fi
 

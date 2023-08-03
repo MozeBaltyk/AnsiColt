@@ -12,6 +12,8 @@ _clone project repository:
         VAR_REPO_HOST="GH_HOST"
         CLI_REPO="gh"
         CONFIG_REPO="$HOME/.config/gh"
+        CONFIG_FILE="${CONFIG_REPO}/hosts.yml"
+        YQ_SEARCH=".\"{{repository}}\".email"
         # Setup command to eval
         CMD="${VAR_REPO_HOST}={{repository}} ${CLI_REPO}"
         #https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps#available-scopes
@@ -20,11 +22,13 @@ _clone project repository:
         VAR_REPO_HOST="GLAB_HOST"
         CLI_REPO="glab"
         CONFIG_REPO="$HOME/.config/glab-cli"
+        CONFIG_FILE="${CONFIG_REPO}/config.yml"
+        YQ_SEARCH=".hosts.\"{{repository}}\".email"
         # Setup command to eval
         CMD="${VAR_REPO_HOST}={{repository}} ${CLI_REPO}"
         OPTIONS=""
     else
-        printf "\e[1;31m[ERROR]\e[m unknown repository.\n"
+        printf "\e[1;31m[ERROR]\e[m unknown repository or not reachable.\n"
         exit 1
     fi
     # Setup command to eval
@@ -33,6 +37,24 @@ _clone project repository:
 
     # Connect to repo before
     eval "${CMD} auth status"
+
+    # Get the email associated with repo or set it if missing
+    if [[ $(yq "${YQ_SEARCH}" ${CONFIG_FILE}) == null ]]; then
+      # Ask for email
+      while true; do
+        read -p "Give a email to associate to this repository :  "  email
+        if echo $email | grep -q '^[a-zA-Z0-9.]*@[a-zA-Z0-9]*\.[a-zA-Z0-9]*$'; then
+          printf "\e[1;34m[INFO]\e[m This email will be set in all projects git config.\n";
+          break;
+        else
+          printf "\e[1;31m[ERROR]\e[m This does NOT look like an email.\n"
+        fi
+      done
+      # Set the email in repo config
+      eval "yq eval '"${YQ_SEARCH}" = \"${email}\"' -i ${CONFIG_FILE}"
+    else
+      email=$(yq "${YQ_SEARCH}" ${CONFIG_FILE})
+    fi
 
     # Define your user
     user=$( eval "${CMD} auth status 2>&1" | awk '{for (I=1;I<NF;I++) if ($I == "as") print $(I+1)}' )
