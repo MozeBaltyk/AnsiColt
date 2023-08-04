@@ -3,7 +3,7 @@ name: Tests
 on:
   push:
     branches: [master, main]
-  pull_reauest:
+  pull_request:
     branches: [master, main]
   schedule:
     - cron: '0 6 * * *'
