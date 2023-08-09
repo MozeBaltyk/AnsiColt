@@ -72,8 +72,8 @@ _clone_all repository group='NULL':
             git clone https://{{repository}}/${project_lowercase}.git $HOME/${project_to_clone}
 
             # Set user/email in git local otherwise the push are going to be with your global user.
-            cd $HOME/${project_to_clone}; git config --local --replace-all user.name ${user}
-            cd $HOME/${project_to_clone}; git config --local --replace-all user.email ${email}
+            cd $HOME/${project_to_clone}; git config --local --replace-all user.name ${user}; cd - 
+            cd $HOME/${project_to_clone}; git config --local --replace-all user.email ${email}; cd - 
         done
     # Here we filter on specific group or user
     elif (( $number_of_projects_found >= 1 )) && [[ "{{group}}" != "NULL" ]]; then
@@ -86,7 +86,7 @@ _clone_all repository group='NULL':
             git clone https://{{repository}}/${project_lowercase}.git $HOME/${project_to_clone}
 
             # Set user/email in git local otherwise the push are going to be with your global user.
-            cd $HOME/${project_to_clone}; git config --local --replace-all user.name ${user}
-            cd $HOME/${project_to_clone}; git config --local --replace-all user.email ${email}
+            cd $HOME/${project_to_clone}; git config --local --replace-all user.name ${user}; cd -
+            cd $HOME/${project_to_clone}; git config --local --replace-all user.email ${email}; cd -
         done
     fi

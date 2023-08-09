@@ -75,8 +75,8 @@ _clone project repository:
         git clone https://{{repository}}/${project_lowercase}.git $HOME/${project_to_clone}
 
         # Set user/email in git local otherwise the push are going to be with your global user.
-        cd $HOME/${project_to_clone}; git config --local --replace-all user.name ${user}
-        cd $HOME/${project_to_clone}; git config --local --replace-all user.email ${email}
+        cd $HOME/${project_to_clone}; git config --local --replace-all user.name ${user}; cd - 
+        cd $HOME/${project_to_clone}; git config --local --replace-all user.email ${email}; cd - 
 
     elif (( $number_of_projects_found > 1 )); then
         project_found=$( eval "${CMD} repo list  | grep -iw "^.*/{{ project }}"" )
