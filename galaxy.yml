@@ -16,7 +16,7 @@ description: >
   Collection to start an Ansible Collection
 
 license:
-- Apache-2.0
+  - Apache-2.0
 
 license_file: 'LICENSE'
 

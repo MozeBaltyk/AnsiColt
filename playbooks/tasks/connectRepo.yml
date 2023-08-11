@@ -6,4 +6,4 @@
     - ../vars/main.yml
 
   roles:
-  - {role: connect_to_repository,  }
+    - { role: connect_to_repository, }

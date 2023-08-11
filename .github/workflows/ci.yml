@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python_version: ["3.9", "3.11"]
+        python_version: ["3.9.13", "3.10.10"]
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -40,4 +40,15 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install yamllint ansible-core flake8 ansible-lint voluptuous
+      
+      - name: Auto Correct YAML lint errors
+        run: |
+          echo '# Correct no new line character at the end of file'
+          sed -i -e '$a\' playbooks/tasks/connectRepo.yml
+          echo '# Correct trailing spaces" 
+          sed -i -e 's/[ \t]*$//' playbooks/tasks/connectRepo.yml
 
+      - name: Auto Correct YAML lint errors
+        run: |
+          yamllint .
+          
