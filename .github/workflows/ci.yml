@@ -41,12 +41,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install yamllint ansible-core flake8 ansible-lint voluptuous
       
-      - name: Auto Correct YAML lint errors
-        run: |
-          echo '# Correct no new line character at the end of file'
-          sed -i -e '$a\' playbooks/tasks/connectRepo.yml
-          echo '# Correct trailing spaces" 
-          sed -i -e 's/[ \t]*$//' playbooks/tasks/connectRepo.yml
+      #- name: Auto Correct YAML lint errors
+      #  run: |
+      #    echo '# Correct no new line character at the end of file'
+      #    sed -i -e '$a\' playbooks/tasks/connectRepo.yml
+      #    echo '# Correct trailing spaces" 
+      #    sed -i -e 's/[ \t]*$//' playbooks/tasks/connectRepo.yml
 
       - name: Auto Correct YAML lint errors
         run: |
