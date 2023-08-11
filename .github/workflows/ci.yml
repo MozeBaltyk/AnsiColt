@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python_version: ["3.9.13", "3.10.10"]
+        python_version: ["3.10.10"]
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -50,5 +50,5 @@ jobs:
 
       - name: Auto Correct YAML lint errors
         run: |
-          yamllint .
+          cd /home/runner/work/MozeBaltyk/AnsiColt/ && yamllint .
           
