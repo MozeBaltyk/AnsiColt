@@ -17,24 +17,23 @@
     - fs:  "/tmp"
 
   tasks:
-  # Network
-  - name: Print Default interface info
-    debug:
-      msg: "{{ iface }} - {{ ip_address }}"
+    # Network
+    - name: Print Default interface info
+      debug:
+        msg: "{{ iface }} - {{ ip_address }}"
 
-  # Disks
-  - set_fact:
-      mount: '{{ ansible_mounts | selectattr("mount", "eq", fs  ) }}'
-  - set_fact:
-      disk_usage:         "{{ mount[0]['size_total'] - mount[0]['size_available'] }}"
-  - set_fact:
-      disk_usage_ratio:   "{{ disk_usage|float / mount[0]['size_total'] }}"
-  - set_fact:
-      disk_usage_s:       "{{ (disk_usage|float / 1000000000) | round(1, 'common') }}GB"
-      disk_total_s:       "{{ (mount[0]['size_total'] / 1000000000) | round(1, 'common') }}GB"
-      disk_usage_ratio_s: "{{ 100 * (disk_usage_ratio|float) | round(1, 'common') }}%"
-      disk_limit_ratio_s: "{{ (100 * disk_limit|float) |round }}%"
+    # Disks
+    - set_fact:
+        mount: '{{ ansible_mounts | selectattr("mount", "eq", fs  ) }}'
+    - set_fact:
+        disk_usage:         "{{ mount[0]['size_total'] - mount[0]['size_available'] }}"
+    - set_fact:
+        disk_usage_ratio:   "{{ disk_usage|float / mount[0]['size_total'] }}"
+    - set_fact:
+        disk_usage_s:       "{{ (disk_usage|float / 1000000000) | round(1, 'common') }}GB"
+        disk_total_s:       "{{ (mount[0]['size_total'] / 1000000000) | round(1, 'common') }}GB"
+        disk_usage_ratio_s: "{{ 100 * (disk_usage_ratio|float) | round(1, 'common') }}%"
+        disk_limit_ratio_s: "{{ (100 * disk_limit|float) |round }}%"
 
-  - debug:
-      msg: "fs {{ mount[0]['mount'] }} - disk usage {{ disk_usage_s }} of total {{ disk_total_s }} ({{ disk_usage_ratio_s }}) (should be within limit {{ disk_limit_ratio_s }})"
-
+    - debug:
+        msg: "fs {{ mount[0]['mount'] }} - disk usage {{ disk_usage_s }} of total {{ disk_total_s }} ({{ disk_usage_ratio_s }}) (should be within limit {{ disk_limit_ratio_s }})"

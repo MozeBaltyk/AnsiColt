@@ -6,49 +6,48 @@
     - ../vars/main.yml
 
   pre_tasks:
-  # Email Authors for both collection and roles
-  - block:
-      - name: Give an email to ansible collection
-        pause:
-          prompt: "Give an email that we can set as author of this collection (ENTER take from git config global)"
-        register: prompt_email
+    # Email Authors for both collection and roles
+    - block:
+        - name: Give an email to ansible collection
+          pause:
+            prompt: "Give an email that we can set as author of this collection (ENTER take from git config global)"
+          register: prompt_email
 
-      - name: Set authors email
-        set_fact:
-          global_author_email: "{{ prompt_email['user_input'] }}"
-        when: prompt_email['user_input']|length != 0
+        - name: Set authors email
+          set_fact:
+            global_author_email: "{{ prompt_email['user_input'] }}"
+          when: prompt_email['user_input']|length != 0
 
-      - block:
-          - name: Get User.Email from git global config to define authors of the collection
-            shell: "git config --global user.email"
-            register: gitconfig_email
+        - block:
+            - name: Get User.Email from git global config to define authors of the collection
+              shell: "git config --global user.email"
+              register: gitconfig_email
 
-          - name: Set authors email from git config
-            set_fact:
-              global_author_email: "{{ gitconfig_email['stdout'] }}"
-        when: prompt_email['user_input']|length == 0
+            - name: Set authors email from git config
+              set_fact:
+                global_author_email: "{{ gitconfig_email['stdout'] }}"
+          when: prompt_email['user_input']|length == 0
 
-    when: (global_author_email is not defined) or (global_author_email|length == 0)
-    run_once: true
+      when: (global_author_email is not defined) or (global_author_email|length == 0)
+      run_once: true
 
-  # Description for Project and Collection
-  - block:
-      - name: Set description to ansible collection
-        pause:
-          prompt: "Please give a description to your collection"
-        register: prompt_description
+    # Description for Project and Collection
+    - block:
+        - name: Set description to ansible collection
+          pause:
+            prompt: "Please give a description to your collection"
+          register: prompt_description
 
-      - name: Set your description coming from prompt
-        set_fact:
-          global_collection_description: "{{ prompt_description['user_input'] }}"
+        - name: Set your description coming from prompt
+          set_fact:
+            global_collection_description: "{{ prompt_description['user_input'] }}"
 
-    when: (global_collection_description is not defined) or (global_collection_description|length == 0)
-    run_once: true
+      when: (global_collection_description is not defined) or (global_collection_description|length == 0)
+      run_once: true
 
   roles:
-  - {role: connect_to_repository,  tags: repository,  when: global_target_repository|length != 0}
-  - {role: create_collection,      tags: collection,  }
-  - {role: create_role,            tags: role,
+    - { role: connect_to_repository,  tags: repository, when: global_target_repository|length != 0 }
+    - { role: create_collection,      tags: collection, }
+    - { role: create_role,            tags: role,
         global_role_description: "This is just an example role",
-        global_role_name: "example",
-    }
+        global_role_name: "example", }

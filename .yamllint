@@ -32,7 +32,7 @@ rules:
   #line-length: disable
   #indentation: disable
   line-length:
-    max: 120
+    max: 180
     level: warning
 
 ignore: |

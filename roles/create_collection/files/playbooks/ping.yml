@@ -15,9 +15,9 @@
   - name: Print facts - FQDN - distribution - version
     debug:
       msg:
-      - "This is playing on hosts: {{ ansible_play_hosts }}"
-      - "{{ ansible_fqdn }} - {{ ansible_distribution }} {{ ansible_distribution_version }} - connexion with: {{ ansible_user }}, install with: {{ install_user }}"
-      - "OS Family: {{ ansible_os_family }}"
+        - "This is playing on hosts: {{ ansible_play_hosts }}"
+        - "{{ ansible_fqdn }} {{ ansible_distribution }} {{ ansible_distribution_version }}, connexion with {{ ansible_user }}, install with {{ install_user }}"
+        - "OS Family: {{ ansible_os_family }}"
 
   - name: Print facts - FQDN - interface
     debug:

@@ -6,16 +6,16 @@
     name: setup_repo_cmd
 
 - block:
-  - name: Check auth status
-    shell: "{{ CMD }} auth status"
-    register: auth_status
+    - name: Check auth status
+      shell: "{{ CMD }} auth status"
+      register: auth_status
 
-  - debug:
-      var: auth_status['stdout']
+    - debug:
+        var: auth_status['stdout']
 
-  rescue: 
+  rescue:
     - debug:
         msg: |
           # Run manually command: "{{ CMD }} auth login {{ RIGHTS }}"
-          # 
+          #
           # Then relaunch your command...
