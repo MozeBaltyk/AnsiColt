@@ -20,7 +20,7 @@ license:
 
 license_file: 'LICENSE'
 
-tags: 
+tags:
   - devops
   - tools
   - collection
@@ -39,8 +39,8 @@ issues: https://github.com/MozeBaltyk/AnsiColt/issues
 
 build_ignore:
   - .gitignore
-  - '.*.swp' 
-  - .govmomi 
+  - '.*.swp'
+  - .govmomi
   - '.terraform*'
   - 'terraform.tfstate*'
   - .DS_Store

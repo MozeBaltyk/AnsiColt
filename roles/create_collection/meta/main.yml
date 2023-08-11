@@ -1,7 +1,7 @@
 galaxy_info:
   author: MozeBaltyk
-  description: Role to initiate new Collections on a SCM (by default github) 
- 
+  description: Role to initiate new Collections on a SCM (by default github)
+
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
   # issue_tracker_url: http://example.com/issue/tracker

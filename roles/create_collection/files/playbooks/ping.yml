@@ -7,7 +7,7 @@
 ######################################################################################
 
 - name: Ping and Display some info
-  hosts: all 
+  hosts: all
   serial: 1
 
   tasks:

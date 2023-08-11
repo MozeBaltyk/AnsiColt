@@ -2,11 +2,11 @@
 
 - name: Initialize a new Collection
   command: "ansible-galaxy collection init {{ collection_namespace }}.{{ collection_name }} --init-path ~/"
-  args: 
+  args:
     creates: "~/{{ collection_namespace }}/{{ collection_name }}"
 
 - name: Create complementary directories
-  file: 
+  file:
     path: '{{ item }}'
     state: 'directory'
     recurse: true
@@ -14,7 +14,7 @@
     - '~/{{ collection_namespace }}/{{ collection_name }}/plugins/filter'
     - '~/{{ collection_namespace }}/{{ collection_name }}/plugins/modules'
     - '~/{{ collection_namespace }}/{{ collection_name }}/plugins/inventory'
-    - '~/{{ collection_namespace }}/{{ collection_name }}/playbooks/files'      
+    - '~/{{ collection_namespace }}/{{ collection_name }}/playbooks/files'
     - '~/{{ collection_namespace }}/{{ collection_name }}/playbooks/vars'
     - '~/{{ collection_namespace }}/{{ collection_name }}/playbooks/templates'
     - '~/{{ collection_namespace }}/{{ collection_name }}/playbooks/tasks'
@@ -22,12 +22,12 @@
     - '~/{{ collection_namespace }}/{{ collection_name }}/deps'
 
 - name: Push templates inside collection
-  template: 
+  template:
     src: '{{ item.src }}'
     dest: '{{ item.dest }}'
   loop:
     - { src: 'plugins/inventory/hosts.yml',                dest: '~/{{ collection_namespace }}/{{ collection_name }}/plugins/inventory/hosts.yml' }
-    - { src: 'collections/pre-commit-config.yaml',         dest: '~/{{ collection_namespace }}/{{ collection_name }}/.pre-commit-config.yaml' } 
+    - { src: 'collections/pre-commit-config.yaml',         dest: '~/{{ collection_namespace }}/{{ collection_name }}/.pre-commit-config.yaml' }
     - { src: 'collections/ansible_lint',                   dest: '~/{{ collection_namespace }}/{{ collection_name }}/.ansible_lint' }
     - { src: 'collections/yamllint',                       dest: '~/{{ collection_namespace }}/{{ collection_name }}/.yamllint' }
     - { src: 'collections/gitignore',                      dest: '~/{{ collection_namespace }}/{{ collection_name }}/.gitignore' }
@@ -36,10 +36,10 @@
     - { src: 'collections/galaxy.yml.j2',                  dest: '~/{{ collection_namespace }}/{{ collection_name }}/galaxy.yml' }
     - { src: 'collections/{{ collection_licence_file }}',  dest: '~/{{ collection_namespace }}/{{ collection_name }}/LICENSE' }
     - { src: 'collections/Makefile',                       dest: '~/{{ collection_namespace }}/{{ collection_name }}/Makefile' }
-    - { src: 'collections/README.md.j2',                   dest: '~/{{ collection_namespace }}/{{ collection_name }}/README.md' } 
+    - { src: 'collections/README.md.j2',                   dest: '~/{{ collection_namespace }}/{{ collection_name }}/README.md' }
 
 - name: Push files inside collection
-  copy: 
+  copy:
     src: '{{ item.src }}'
     dest: '{{ item.dest }}'
   loop:

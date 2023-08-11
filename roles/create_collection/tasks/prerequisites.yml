@@ -1,10 +1,10 @@
 # Collection Description
 - block:
-    - name: Set description to ansible collection 
+    - name: Set description to ansible collection
       pause:
         prompt: "Please give a description to your collection"
       register: prompt_description
-        
+
     - name: Set your description coming from prompt
       set_fact:
         collection_description: "{{ prompt_description['user_input'] }}"
@@ -13,7 +13,7 @@
 
 # Email Authors for collection
 - block:
-    - name: Give an email to ansible collection 
+    - name: Give an email to ansible collection
       pause:
         prompt: "Please give an email that we can set as author of this collection (if empty, take as default from the git config global)"
       register: prompt_email
@@ -27,10 +27,10 @@
         - name: Get User.Email from git global config to define authors of the collection
           shell: "git config --global user.email"
           register: gitconfig_email
-    
+
         - name: Set authors email from git config
           set_fact:
-            collection_author_email: "{{ gitconfig_email['stdout'] }}" 
+            collection_author_email: "{{ gitconfig_email['stdout'] }}"
       when: prompt_email['user_input']|length == 0
   when: (collection_author_email is not defined) or (collection_author_email|length == 0)
   run_once: true

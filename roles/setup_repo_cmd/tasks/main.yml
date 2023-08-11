@@ -1,14 +1,14 @@
 ---
 # tasks file for setup_repo_cmd
 
-# Not working anymore for Gitlab: 
+# Not working anymore for Gitlab:
 #   repository_type=$(curl -Lis https://{{ repository }}/ | awk '/<title>.*GitHub<\/title>/ || /<title>.*GitLab<\/title>/ {sub(/<\/title>/,"");print $NF}' || echo "unknown")
 
 - name: Figure out which repo
   shell: >
-    curl -Lis https://{{ target_repository }}/ 
-    | egrep -oi "<title>.*GitHub<\/title>|<title>.*GitLab<\/title>" 
-    | awk '{sub(/<\/title>/,"");print $NF}' 
+    curl -Lis https://{{ target_repository }}/
+    | egrep -oi "<title>.*GitHub<\/title>|<title>.*GitLab<\/title>"
+    | awk '{sub(/<\/title>/,"");print $NF}'
     || echo "unknown repo"
   register: repo_type_found
 

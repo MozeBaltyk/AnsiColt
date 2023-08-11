@@ -17,7 +17,7 @@
     - fs:  "/tmp"
 
   tasks:
-  # Network 
+  # Network
   - name: Print Default interface info
     debug:
       msg: "{{ iface }} - {{ ip_address }}"
