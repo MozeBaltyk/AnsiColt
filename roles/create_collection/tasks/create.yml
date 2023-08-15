@@ -3,9 +3,6 @@
   shell: ansible --version | head -1 | awk '{sub(/]/,"");print $NF}'
   register: version
 
-- debug:
-    var: version
-
 - name: Set ansible_current_version
   set_fact:
     ansible_current_version: "{{ version['stdout'] }}"

@@ -7,24 +7,20 @@ on:
     branches: [master, main, "release/v*"]
 
 jobs:
-  ansible-lint:
+  run-ansible-lint:
     runs-on: ubuntu-latest
-
     steps:
       - name: run-ansible-lint
         uses: ansible/ansible-lint@main
 
-  yamllint:
-    name: run-yamllint
+  run-yamllint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-
-      - name: yamllint
-        uses: reviewdog/action-yamllint@v1
-        with:
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-review # Change reporter.
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v4
+      - name: 🚀 Run yamllint
+        run: |
+          yamllint .
 
       #- name: Auto Correct YAML lint errors
       #  run: |
