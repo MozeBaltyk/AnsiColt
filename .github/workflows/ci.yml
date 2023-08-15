@@ -14,17 +14,11 @@ env:
 jobs:
   sanity:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python_version: ["3.10.10"]
+
     steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-        with:
-          path: ansible_collections/MozeBaltyk/AnsiColt/
 
       - name: run-ansible-lint
-        uses: ansible/ansible-lint@v6.17.2
+        uses: ansible/ansible-lint@v6
 
       #- name: Auto Correct YAML lint errors
       #  run: |
