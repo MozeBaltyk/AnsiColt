@@ -5,8 +5,6 @@ on:
     branches: [master, main]
   pull_request:
     branches: [master, main]
-  schedule:
-    - cron: '0 6 * * *'
 
 env:
   COLORTERM: 'yes'
@@ -25,22 +23,9 @@ jobs:
         with:
           path: ansible_collections/MozeBaltyk/AnsiColt/
 
-      - name: Set up Python ${{ matrix.python_version }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python_version }}
-          cache: 'pip'
+      - name: run-ansible-lint
+        uses: ansible/ansible-lint@v6.17.2
 
-      - name: Create default collection path
-        run: |
-          mkdir -p /home/runner/.ansible/
-          ln -s /home/runner/work/MozeBaltyk/AnsiColt/ /home/runner/.ansible/collections
-
-      - name: Install yamllint, ansible and molecule
-        run: |
-          python -m pip install --upgrade pip
-          pip install yamllint ansible-core flake8 ansible-lint voluptuous
-      
       #- name: Auto Correct YAML lint errors
       #  run: |
       #    echo '# Correct no new line character at the end of file'
@@ -48,7 +33,18 @@ jobs:
       #    echo '# Correct trailing spaces" 
       #    sed -i -e 's/[ \t]*$//' playbooks/tasks/connectRepo.yml
 
-      - name: Auto Correct YAML lint errors
-        run: |
-          cd /home/runner/work/MozeBaltyk/AnsiColt/ && yamllint .
+      # - name: Set up Python ${{ matrix.python_version }}
+      #   uses: actions/setup-python@v4
+      #   with:
+      #     python-version: ${{ matrix.python_version }}
+      #     cache: 'pip'
+
+      # - name: Install yamllint, ansible and molecule
+      #   run: |
+      #     python -m pip install --upgrade pip
+      #     pip install yamllint ansible-core flake8 ansible-lint voluptuous
+
+      # - name: Auto Correct YAML lint errors
+      #   run: |
+      #      yamllint .
           
