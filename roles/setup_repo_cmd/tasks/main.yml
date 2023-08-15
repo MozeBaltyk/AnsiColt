@@ -26,6 +26,8 @@
     - name: Setup command to eval
       set_fact:
         CMD: "{{ VAR_REPO_HOST }}={{target_repository}} {{CLI_REPO}}"
+        CONFIG_FILE: "{{CONFIG_REPO}}/hosts.yml"
+        YQ_SEARCH: ".\"{{target_repository}}\".email"
   when:  repository_type == "GitHub"
 
 - block:
@@ -38,4 +40,6 @@
     - name: Setup command to eval
       set_fact:
         CMD: "{{ VAR_REPO_HOST }}={{target_repository}} {{CLI_REPO}}"
+        CONFIG_FILE: "{{CONFIG_REPO}}/config.yml"
+        YQ_SEARCH: ".hosts.\"{{target_repository}}\".email"
   when:  repository_type == "GitLab"

@@ -2,23 +2,31 @@ name: Tests
 
 on:
   push:
-    branches: [master, main]
+    branches: [master, main, "release/v*"]
   pull_request:
-    branches: [master, main]
-
-env:
-  COLORTERM: 'yes'
-  TERM: 'xterm-256color'
-  PYTEST_ADDOPTS: '--color=yes'
+    branches: [master, main, "release/v*"]
 
 jobs:
-  sanity:
+  ansible-lint:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: run-ansible-lint
         uses: ansible/ansible-lint@main
+        
+  yamllint:
+    name: run-yamllint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: yamllint
+        uses: reviewdog/action-yamllint@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review # Change reporter.
+          yamllint_flags: 'src/'
+
 
       #- name: Auto Correct YAML lint errors
       #  run: |
