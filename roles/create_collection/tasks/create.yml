@@ -1,4 +1,14 @@
 ---
+- name: Get your current ansible version
+  shell: ansible --version | head -1 | awk '{sub(/]/,"");print $NF}'
+  register: version
+
+- debug:
+    var: version
+
+- name: Set ansible_current_version
+  set_fact:
+    ansible_current_version: "{{ version['stdout'] }}"
 
 - name: Initialize a new Collection
   command: "ansible-galaxy collection init {{ collection_namespace }}.{{ collection_name }} --init-path ~/"
@@ -19,7 +29,6 @@
     - '~/{{ collection_namespace }}/{{ collection_name }}/playbooks/templates'
     - '~/{{ collection_namespace }}/{{ collection_name }}/playbooks/tasks'
     - '~/{{ collection_namespace }}/{{ collection_name }}/scripts/prerequis'
-    - '~/{{ collection_namespace }}/{{ collection_name }}/deps'
 
 - name: Push templates inside collection
   template:
@@ -37,6 +46,12 @@
     - { src: 'collections/{{ collection_licence_file }}',  dest: '~/{{ collection_namespace }}/{{ collection_name }}/LICENSE' }
     - { src: 'collections/Makefile',                       dest: '~/{{ collection_namespace }}/{{ collection_name }}/Makefile' }
     - { src: 'collections/README.md.j2',                   dest: '~/{{ collection_namespace }}/{{ collection_name }}/README.md' }
+    - { src: 'collections/meta/runtime.yml.j2',            dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/runtime.yml' }
+    - { src: 'collections/meta/ee-arkade.txt',             dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/ee-arkade.txt' }
+    - { src: 'collections/meta/ee-bindep.txt',             dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/ee-bindep.txt' }
+    - { src: 'collections/meta/ee-images.txt',             dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/ee-images.txt' }
+    - { src: 'collections/meta/ee-requirements.txt',       dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/ee-requirements.txt' }
+    - { src: 'collections/meta/ee-requirements.yml',       dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/ee-requirements.yml' }
 
 - name: Push files inside collection
   copy:
@@ -48,8 +63,3 @@
     - { src: 'scripts/prerequis/arkade.sh',                dest: '~/{{ collection_namespace }}/{{ collection_name }}/scripts/prerequis/arkade.sh' }
     - { src: 'scripts/prerequis/load.sh',                  dest: '~/{{ collection_namespace }}/{{ collection_name }}/scripts/prerequis/load.sh' }
     - { src: 'scripts/prerequis/Makefile',                 dest: '~/{{ collection_namespace }}/{{ collection_name }}/scripts/prerequis/Makefile' }
-    - { src: 'deps/arkade.txt',                            dest: '~/{{ collection_namespace }}/{{ collection_name }}/deps/arkade.txt' }
-    - { src: 'deps/bindep.txt',                            dest: '~/{{ collection_namespace }}/{{ collection_name }}/deps/bindep.txt' }
-    - { src: 'deps/images.txt',                            dest: '~/{{ collection_namespace }}/{{ collection_name }}/deps/images.txt' }
-    - { src: 'deps/requirements.txt',                      dest: '~/{{ collection_namespace }}/{{ collection_name }}/deps/requirements.txt' }
-    - { src: 'deps/requirements.yml',                      dest: '~/{{ collection_namespace }}/{{ collection_name }}/deps/requirements.yml' }

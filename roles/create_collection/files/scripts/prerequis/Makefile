@@ -19,21 +19,21 @@ arkade:
 	./arkade.sh
 
 .PHONY: collections
-## Install ansible collection defined in ./deps/requirements.yml
+## Install ansible collection defined in ./meta/ee-requirements.yml
 collections:
-	ansible-galaxy install -r ../../deps/requirements.yml
+	ansible-galaxy install -r ../../meta/ee-requirements.yml
 
 .PHONY: pythons
-## Install pythons packages defined in ./deps/requirements.txt
+## Install pythons packages defined in ./meta/ee-requirements.txt
 pythons:
-	python3 -m pip install -r ../../deps/requirements.txt
+	python3 -m pip install -r ../../meta/ee-requirements.txt
 
 .PHONY: bindeps
-## Install packages rpm/dep defined in ./deps/bindeps
+## Install packages rpm/dep defined in ./meta/ee-bindeps.txt
 bindeps:
         @echo "## Install Bindeps dependancies ##"
         @python3 -m pip install bindep
-        @for i in $$( python3 -m bindep -bf ../../deps/bindeps.txt ); do echo "### $$i ###"; sudo $(PKG_MANAGER) install -y $$i; done
+        @for i in $$( python3 -m bindep -bf ../../meta/ee-bindeps.txt ); do echo "### $$i ###"; sudo $(PKG_MANAGER) install -y $$i; done
 
 # keep it at the end of your Makefile
 .DEFAULT_GOAL := show-help

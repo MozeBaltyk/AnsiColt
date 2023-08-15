@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # load images listed in deps/images.txt
-printf "\e[1;34m[INFO]\e[m load images listed in deps/images.tx.\n"
+printf "\e[1;34m[INFO]\e[m load images listed in meta/ee-images.tx.\n"
 
-for line in $(cat ../../deps/images.txt); do
+for line in $(cat ../../meta/ee-images.txt); do
   echo "### ${line} ###"
   image=$( echo "${line}" | awk  -F ";" '{print $1}' )
   dir=$( echo "${line}" | awk  -F ";" '{print $2}' )

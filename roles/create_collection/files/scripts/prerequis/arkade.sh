@@ -47,7 +47,7 @@ install_arkade() {
 
 #Install arkade packages
 install_pkg(){ 
-  for line in $(cat ../../deps/arkade.txt | egrep -v "#|^$" ); do
+  for line in $(cat ../../meta/ee-arkade.txt | egrep -v "#|^$" ); do
     arkade get ${line}
   done
 }

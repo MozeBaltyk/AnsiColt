@@ -1,5 +1,5 @@
-name: Tests
-
+---
+name: CI
 on:
   push:
     branches: [master, main, "release/v*"]
@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: run-ansible-lint
         uses: ansible/ansible-lint@main
-        
+
   yamllint:
     name: run-yamllint
     runs-on: ubuntu-latest
@@ -25,14 +25,12 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review # Change reporter.
-          yamllint_flags: 'src/'
-
 
       #- name: Auto Correct YAML lint errors
       #  run: |
       #    echo '# Correct no new line character at the end of file'
       #    sed -i -e '$a\' playbooks/tasks/connectRepo.yml
-      #    echo '# Correct trailing spaces" 
+      #    echo '# Correct trailing spaces"
       #    sed -i -e 's/[ \t]*$//' playbooks/tasks/connectRepo.yml
 
       # - name: Set up Python ${{ matrix.python_version }}
@@ -49,4 +47,3 @@ jobs:
       # - name: Auto Correct YAML lint errors
       #   run: |
       #      yamllint .
-          

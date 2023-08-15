@@ -27,15 +27,11 @@ rules:
   new-line-at-end-of-file: disable
   new-lines:
     type: unix
-  #trailing-spaces: disable
-  #truthy: disable
-  #line-length: disable
-  #indentation: disable
-  line-length:
-    max: 180
-    level: warning
+  line-length: disable
+  truthy:
+    check-keys: false
 
 ignore: |
   roles/example
-  .github
+  .github/notes
   scripts
