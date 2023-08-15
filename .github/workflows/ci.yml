@@ -18,7 +18,7 @@ jobs:
     steps:
 
       - name: run-ansible-lint
-        uses: ansible/ansible-lint@v6
+        uses: ansible/ansible-lint@main
 
       #- name: Auto Correct YAML lint errors
       #  run: |
