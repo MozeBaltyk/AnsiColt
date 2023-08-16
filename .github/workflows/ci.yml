@@ -7,12 +7,6 @@ on:
     branches: [master, main, "release/v*"]
 
 jobs:
-  run-ansible-lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: run-ansible-lint
-        uses: ansible/ansible-lint@main
-
   run-yamllint:
     runs-on: ubuntu-latest
     steps:
@@ -21,6 +15,13 @@ jobs:
       - name: 🚀 Run yamllint
         run: |
           yamllint .
+
+  run-ansible-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: run-ansible-lint
+        uses: ansible/ansible-lint@main
+
 
     #- name: Auto Correct YAML lint errors
     #  run: |
