@@ -38,7 +38,7 @@
     - { src: 'collections/yamllint',                       dest: '~/{{ collection_namespace }}/{{ collection_name }}/.yamllint' }
     - { src: 'collections/gitignore',                      dest: '~/{{ collection_namespace }}/{{ collection_name }}/.gitignore' }
     - { src: 'collections/ansible.cfg',                    dest: '~/{{ collection_namespace }}/{{ collection_name }}/ansible.cfg' }
-    - { src: 'collections/changelog.md',                   dest: '~/{{ collection_namespace }}/{{ collection_name }}/changelog.md' }
+    - { src: 'collections/CHANGELOG.md',                   dest: '~/{{ collection_namespace }}/{{ collection_name }}/CHANGELOG.md' }
     - { src: 'collections/galaxy.yml.j2',                  dest: '~/{{ collection_namespace }}/{{ collection_name }}/galaxy.yml' }
     - { src: 'collections/{{ collection_licence_file }}',  dest: '~/{{ collection_namespace }}/{{ collection_name }}/LICENSE' }
     - { src: 'collections/Makefile',                       dest: '~/{{ collection_namespace }}/{{ collection_name }}/Makefile' }
