@@ -24,17 +24,31 @@ _help:
     @printf "EXAMPLE\n"
     @printf "     colt REPOSITORY=gitlab.com TYPE=public init AweSome DreamTEAM\n"
 
+# Check project name
+_precheck PROJECT:
+    #!/usr/bin/env bash
+    if ! echo "{{PROJECT}}" | egrep -q "^[a-zA-Z][a-zA-Z0-9_]+$"; then 
+        printf "\e[1;31m[ERROR]\e[m The name choosen for the project is impossible for an Ansible collection.\n";
+        exit 1
+    fi
+
 # Create a new ansible collection on repository.
 init PROJECT *GROUP:
+    @just _precheck {{PROJECT}}
+
     @just -f scripts/justfile/init.justfile _init {{PROJECT}} {{TYPE}} {{REPOSITORY}} {{GROUP}}
 
 # Create a new ansible role inside an existing collection.
 role PROJECT ROLE:
+    @just _precheck {{PROJECT}}
+
     #!/usr/bin/env bash
     ansible-playbook playbooks/tasks/createRole.yml -e role="{{ROLE}}" -e project="{{PROJECT}}"
 
 # Release collection on your repository to the given version in command or in galaxy.yml.
 release PROJECT *VERSION:
+    @just _precheck {{PROJECT}}
+
     @just -f scripts/justfile/release.justfile _release {{PROJECT}} {{REPOSITORY}} {{VERSION}}
 
 # Clone a project from repository keeping directory structure for ansible.
@@ -61,12 +75,16 @@ blank PROJECT *GROUP:
     @just -f scripts/justfile/blank.justfile _blank {{PROJECT}} {{TYPE}} {{REPOSITORY}} {{GROUP}}
 
 # Create a new ansible collection on localhost (not on repository like function below).
-local PROJECT NAMESPACE:
+local PROJECT NAMESPACE:  
+    @just _precheck {{PROJECT}}
+
     #!/usr/bin/env bash
     ansible-playbook playbooks/tasks/createCollection.yml -e namespace="{{NAMESPACE}}" -e project="{{PROJECT}}"
 
 # Build collection locally.
 build PROJECT NAMESPACE:
+    @just _precheck {{PROJECT}}
+    
     #!/usr/bin/env bash
     ansible-galaxy collection build {{NAMESPACE}}/{{PROJECT}}
 
