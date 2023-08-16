@@ -1,7 +1,7 @@
 ---
 ### REQUIRED
-namespace: {{ collection_namespace }}
-name: {{ collection_name }}
+namespace: {{ collection_namespace | lower }}
+name: {{ collection_name | lower }}
 version: {{ collection_version }}
 
 readme: README.md
