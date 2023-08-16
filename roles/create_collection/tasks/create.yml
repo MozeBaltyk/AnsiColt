@@ -44,6 +44,7 @@
     - { src: 'collections/Makefile',                       dest: '~/{{ collection_namespace }}/{{ collection_name }}/Makefile' }
     - { src: 'collections/README.md.j2',                   dest: '~/{{ collection_namespace }}/{{ collection_name }}/README.md' }
     - { src: 'collections/meta/runtime.yml.j2',            dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/runtime.yml' }
+    - { src: 'collections/meta/execution-environment.yml', dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/execution-environment.yml' }
     - { src: 'collections/meta/ee-arkade.txt',             dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/ee-arkade.txt' }
     - { src: 'collections/meta/ee-bindep.txt',             dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/ee-bindep.txt' }
     - { src: 'collections/meta/ee-images.txt',             dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/ee-images.txt' }

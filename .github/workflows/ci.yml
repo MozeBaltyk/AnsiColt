@@ -19,7 +19,7 @@ jobs:
   run-ansible-lint:
     runs-on: ubuntu-latest
     steps:
-      - name: run-ansible-lint
+      - name: 🚀 Run ansible-lint
         uses: ansible/ansible-lint@main
 
 

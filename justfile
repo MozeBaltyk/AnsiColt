@@ -24,31 +24,38 @@ _help:
     @printf "EXAMPLE\n"
     @printf "     colt REPOSITORY=gitlab.com TYPE=public init AweSome DreamTEAM\n"
 
-# Check project name
-_precheck PROJECT:
+# Precheck synthax
+_precheck_collection NAME:
     #!/usr/bin/env bash
-    if ! echo "{{PROJECT}}" | egrep -q "^[a-zA-Z][a-zA-Z0-9_]+$"; then 
-        printf "\e[1;31m[ERROR]\e[m The name choosen for the project is impossible for an Ansible collection.\n";
+    if ! echo "{{NAME}}" | egrep -q "^[a-zA-Z][a-zA-Z0-9_]+$"; then 
+        printf "\e[1;31m[ERROR]\e[m The name choosen for the project is incompatible with an Ansible collection.\n";
+        printf "\e[1;34m[INFO]\e[m Respect this REGEX ^[a-zA-Z][a-zA-Z0-9_]+$ for Collection name.\n";
+        exit 1
+    fi
+
+_precheck_role NAME:
+    #!/usr/bin/env bash
+    if ! echo "{{NAME}}" | egrep -q "^[a-z][a-z0-9_]+$"; then
+        printf "\e[1;31m[ERROR]\e[m The name choosen for the role is incompatible with Ansible collection.\n";
+        printf "\e[1;34m[INFO]\e[m Respect this REGEX ^[a-z][a-z0-9_]+$ for role name.\n";
         exit 1
     fi
 
 # Create a new ansible collection on repository.
 init PROJECT *GROUP:
-    @just _precheck {{PROJECT}}
-
+    @just _precheck_collection {{PROJECT}}
     @just -f scripts/justfile/init.justfile _init {{PROJECT}} {{TYPE}} {{REPOSITORY}} {{GROUP}}
 
 # Create a new ansible role inside an existing collection.
-role PROJECT ROLE:
-    @just _precheck {{PROJECT}}
+role GROUP PROJECT ROLE:
+    @just _precheck_role {{ROLE}}
 
     #!/usr/bin/env bash
-    ansible-playbook playbooks/tasks/createRole.yml -e role="{{ROLE}}" -e project="{{PROJECT}}"
+    ansible-playbook playbooks/tasks/createRole.yml -e role="{{ROLE}}" -e project="{{PROJECT}}" -e namespace="{{GROUP}}"
 
 # Release collection on your repository to the given version in command or in galaxy.yml.
 release PROJECT *VERSION:
-    @just _precheck {{PROJECT}}
-
+    @just _precheck_collection {{PROJECT}}
     @just -f scripts/justfile/release.justfile _release {{PROJECT}} {{REPOSITORY}} {{VERSION}}
 
 # Clone a project from repository keeping directory structure for ansible.
@@ -76,14 +83,14 @@ blank PROJECT *GROUP:
 
 # Create a new ansible collection on localhost (not on repository like function below).
 local PROJECT NAMESPACE:  
-    @just _precheck {{PROJECT}}
+    @just _precheck_collection {{PROJECT}}
 
     #!/usr/bin/env bash
     ansible-playbook playbooks/tasks/createCollection.yml -e namespace="{{NAMESPACE}}" -e project="{{PROJECT}}"
 
 # Build collection locally.
 build PROJECT NAMESPACE:
-    @just _precheck {{PROJECT}}
+    @just _precheck_collection {{PROJECT}}
     
     #!/usr/bin/env bash
     ansible-galaxy collection build {{NAMESPACE}}/{{PROJECT}}
