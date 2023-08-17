@@ -62,7 +62,7 @@ _release project repository *version:
 
     # Check that version is coherent
     version_galaxy=$([ -f ${project_path}/galaxy.yml ] && awk -F":" '/version/ {print $2}' ${project_path}/galaxy.yml|tr -d ' ' || echo "Null")
-    version_changelog=$([ -f ${project_path}/changelog.md ] && grep "##.*([0-9].*)" ${project_path}/changelog.md|head -1|awk '{print $2}'|tr -d ' ' || echo "Null")
+    version_changelog=$([ -f ${project_path}/CHANGELOG.md ] && grep "##.*([0-9].*)" ${project_path}/CHANGELOG.md|head -1|awk '{print $2}'|tr -d ' ' || echo "Null")
     version_latest=$( eval "$CMD release list -R ${project_to_release} | awk '/^v/||/^V/ {sub(/v/,\"\");sub(/V/,\"\"); print \$1}' | head -1" )
 
     # By default take version from galaxy.yml 
@@ -73,16 +73,16 @@ _release project repository *version:
     fi
 
     printf "\e[1;34m[INFO]\e[m Version in galaxy.yml:   ${version_galaxy}    \n"
-    printf "\e[1;34m[INFO]\e[m Version in changelog.md: ${version_changelog} \n"
+    printf "\e[1;34m[INFO]\e[m Version in CHANGELOG.md: ${version_changelog} \n"
     printf "\e[1;34m[INFO]\e[m Version latest in repo:  ${version_latest}    \n"
     printf "\e[1;34m[INFO]\e[m Version you requested:   ${version_requested} \n"
 
-    ## Check that version requested is coherent with galaxy.yml and changelog.md
+    ## Check that version requested is coherent with galaxy.yml and CHANGELOG.md
     if [[ ! -z ${version_galaxy} ]] && [[ ${version_latest} > ${version_galaxy} ]]; then
       printf "\e[1;31m[ERROR]\e[m Stop! Version in galaxy.yml  is lower than latest version found on repository..."
       exit 1
     elif [[ ! -z ${version_changelog} ]] && [[ ${version_latest} > ${version_changelog} ]]; then
-      printf "\e[1;31m[ERROR]\e[m Stop! Version in changelog.md is lower than latest version found on repository..."
+      printf "\e[1;31m[ERROR]\e[m Stop! Version in CHANGELOG.md is lower than latest version found on repository..."
       exit 1
     elif [[ "${version_requested}" != "" ]] && [[ ${version_latest} > ${version_requested} ]]; then
       printf "\e[1;31m[ERROR]\e[m Stop! Version you requested to release is lower than latest version found on repository..."
@@ -102,37 +102,37 @@ _release project repository *version:
       printf "\e[1;32m[OK]\e[m File galaxy.yml updated with the version: ${version_requested}\n"
     fi
 
-    # Update changelog.md if it was not done
+    # Update CHANGELOG.md if it was not done
     if [[ "${version_requested}" != "" ]] && [[ ${version_requested} != ${version_changelog} ]]; then
-      printf "\e[1;34m[INFO]\e[m You did not completed the changelog.md with the version that you requested. Doing it for you.\n"
-      printf "# CHANGELOG.md\n\n## ${version_requested} ($(date '+%Y-%m-%d'))" > ${project_path}/changelog.md
+      printf "\e[1;34m[INFO]\e[m You did not completed the CHANGELOG.md with the version that you requested. Doing it for you.\n"
+      printf "# CHANGELOG.md\n\n## ${version_requested} ($(date '+%Y-%m-%d'))" > ${project_path}/CHANGELOG.md
       
-      # Notes for the changelog.md 
-      read -p "Give somes notes for the changelog.md:  " note 
-      printf "\n\n ${note} \n\n\n" >> ${project_path}/changelog.md
+      # Notes for the CHANGELOG.md 
+      read -p "Give somes notes for the CHANGELOG.md:  " note 
+      printf "\n\n ${note} \n\n\n" >> ${project_path}/CHANGELOG.md
 
-      # Display changelog.md
-      cat ${project_path}/changelog.md
+      # Display CHANGELOG.md
+      cat ${project_path}/CHANGELOG.md
       
-      # Pause to verify changelog.md
+      # Pause to verify CHANGELOG.md
       while true; do
-      read -p "# Do you want to git push changelog.mg as it is above and proceed with release? (yes/no) " yn
+      read -p "# Do you want to git push CHANGELOG.mg as it is above and proceed with release? (yes/no) " yn
       case $yn in 
         yes ) printf "\e[1;32m[OK]\e[m Let\'s push...\n\n";
               break;;
-        no )  printf "\e[1;34m[INFO]\e[m Reset changelog.md\n"
-              printf "# CHANGELOG.md\n" > ${project_path}/changelog.md
-              printf "\e[1;34m[INFO]\e[m Complete the changelog.md and then relaunch same command.\n"
+        no )  printf "\e[1;34m[INFO]\e[m Reset CHANGELOG.md\n"
+              printf "# CHANGELOG.md\n" > ${project_path}/CHANGELOG.md
+              printf "\e[1;34m[INFO]\e[m Complete the CHANGELOG.md and then relaunch same command.\n"
               echo exiting...;
               exit;;
         * )   printf "\e[1;31m[ERROR]\e[m invalid response\n";;
       esac
       done
 
-      cd ${project_path}; git add changelog.md && git commit -m "update release version in changelog" && git push 
+      cd ${project_path}; git add CHANGELOG.md && git commit -m "update release version in CHANGELOG" && git push 
       printf "\e[1;32m[OK]\e[m File galaxy.yml updated with the version: ${version_requested}\n"
     fi
 
     # Releasing
     printf "\e[1;34m[INFO]\e[m Releasing version: v${version_requested} can start.\n"
-    cd ${project_path}; eval "${CMD} release create v${version_requested} -F changelog.md"
+    cd ${project_path}; eval "${CMD} release create v${version_requested} -F CHANGELOG.md"
