@@ -12,6 +12,9 @@ exclude_paths:
   - .ansible-lint
   - .yamllint
   - scripts/
+  - playbooks/tasks
   
 skip_list:
-  - yaml[line-length]
+  - yaml[line-length] # max line length 
+  - command-instead-of-shell  # Use shell only when shell functionality is required
+  - experimental  # all rules tagged as experimental

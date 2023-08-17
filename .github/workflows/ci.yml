@@ -21,11 +21,3 @@ jobs:
     steps:
       - name: 🚀 Run ansible-lint
         uses: ansible/ansible-lint@main
-
-
-    #- name: Auto Correct YAML lint errors
-    #  run: |
-    #    echo '# Correct no new line character at the end of file'
-    #    sed -i -e '$a\' playbooks/tasks/connectRepo.yml
-    #    echo '# Correct trailing spaces"
-    #    sed -i -e 's/[ \t]*$//' playbooks/tasks/connectRepo.yml

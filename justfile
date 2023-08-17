@@ -29,7 +29,7 @@ _precheck_collection NAME:
     #!/usr/bin/env bash
     if ! echo "{{NAME}}" | egrep -q "^[a-zA-Z][a-zA-Z0-9_]+$"; then 
         printf "\e[1;31m[ERROR]\e[m The name choosen for the project is incompatible with an Ansible collection.\n";
-        printf "\e[1;34m[INFO]\e[m Respect this REGEX ^[a-zA-Z][a-zA-Z0-9_]+$ for Collection name.\n";
+        printf "\e[1;34m[INFO]\e[m Respect this REGEX ^[a-zA-Z][a-zA-Z0-9_]+$ in the name of your Ansible Collection.\n";
         exit 1
     fi
 
@@ -37,7 +37,7 @@ _precheck_role NAME:
     #!/usr/bin/env bash
     if ! echo "{{NAME}}" | egrep -q "^[a-z][a-z0-9_]+$"; then
         printf "\e[1;31m[ERROR]\e[m The name choosen for the role is incompatible with Ansible collection.\n";
-        printf "\e[1;34m[INFO]\e[m Respect this REGEX ^[a-z][a-z0-9_]+$ for role name.\n";
+        printf "\e[1;34m[INFO]\e[m Respect this REGEX ^[a-z][a-z0-9_]+$ in the name of your role.\n";
         exit 1
     fi
 
@@ -71,7 +71,7 @@ install PROJECT *VERSION:
     #!/usr/bin/env bash
     if [[ {{PROJECT}} =~ .*.tar.gz ]]; then
       printf "Install artifact: {{PROJECT}}\n"
-      ansible-galaxy collection install -U $HOME/{{PROJECT}}
+      ansible-galaxy collection install -U {{PROJECT}}
     else
       printf "Install {{PROJECT}} from {{REPOSITORY}}\n"
       just -f scripts/justfile/install.justfile _install {{PROJECT}} {{REPOSITORY}} {{VERSION}} 
@@ -93,7 +93,7 @@ build PROJECT NAMESPACE:
     @just _precheck_collection {{PROJECT}}
     
     #!/usr/bin/env bash
-    ansible-galaxy collection build {{NAMESPACE}}/{{PROJECT}}
+    ansible-galaxy collection build $HOME/{{NAMESPACE}}/{{PROJECT}} --output-path $HOME/{{NAMESPACE}}/{{PROJECT}}
 
 # Test 
 _test PROJECT ROLE *NAMESPACE:

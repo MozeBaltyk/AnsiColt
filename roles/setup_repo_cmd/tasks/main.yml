@@ -4,42 +4,48 @@
 # Not working anymore for Gitlab:
 #   repository_type=$(curl -Lis https://{{ repository }}/ | awk '/<title>.*GitHub<\/title>/ || /<title>.*GitLab<\/title>/ {sub(/<\/title>/,"");print $NF}' || echo "unknown")
 
-- name: Figure out which repo
-  shell: >
+- name: Figure out which repo # noqa: command-instead-of-module
+  ansible.builtin.shell: >
+    set -o pipefail &&
     curl -Lis https://{{ target_repository }}/
     | egrep -oi "<title>.*GitHub<\/title>|<title>.*GitLab<\/title>"
     | awk '{sub(/<\/title>/,"");print $NF}'
     || echo "unknown repo"
+  args:
+    executable: /bin/bash
   register: repo_type_found
+  changed_when: false
 
 - name: Set var repository_type
-  set_fact:
+  ansible.builtin.set_fact:
     repository_type: "{{ repo_type_found['stdout'] }}"
 
-- block:
-    - name: Set vars for GitHub
-      set_fact:
-        VAR_REPO_HOST: "GH_HOST"
-        CLI_REPO: "gh"
-        CONFIG_REPO: "$HOME/.config/gh"
-        RIGHTS: "-s read:project,repo,write:packages,read:org,workflow"
-    - name: Setup command to eval
-      set_fact:
-        CMD: "{{ VAR_REPO_HOST }}={{target_repository}} {{CLI_REPO}}"
-        CONFIG_FILE: "{{CONFIG_REPO}}/hosts.yml"
-        YQ_SEARCH: ".\"{{target_repository}}\".email"
+- name: Block dedicated to GitHub
   when:  repository_type == "GitHub"
-
-- block:
-    - name: Set vars for GitLab
-      set_fact:
-        VAR_REPO_HOST: "GLAB_HOST"
-        CLI_REPO: "glab"
-        CONFIG_REPO: "$HOME/.config/glab-cli"
-        RIGHTS: ""
+  block:
+    - name: Set vars for GitHub
+      ansible.builtin.set_fact:
+        var_repo_host: "GH_HOST"
+        cli_repo: "gh"
+        config_repo: "$HOME/.config/gh"
+        rights: "-s read:project,repo,write:packages,read:org,workflow"
     - name: Setup command to eval
-      set_fact:
-        CMD: "{{ VAR_REPO_HOST }}={{target_repository}} {{CLI_REPO}}"
-        CONFIG_FILE: "{{CONFIG_REPO}}/config.yml"
-        YQ_SEARCH: ".hosts.\"{{target_repository}}\".email"
+      ansible.builtin.set_fact:
+        cmd: "{{ var_repo_host }}={{ target_repository }} {{ cli_repo }}"
+        config_file: "{{ config_repo }}/hosts.yml"
+        yq_search: ".\"{{ target_repository }}\".email"
+
+- name: Block dedicated to GitLab
   when:  repository_type == "GitLab"
+  block:
+    - name: Set vars for GitLab
+      ansible.builtin.set_fact:
+        var_repo_host: "GLAB_HOST"
+        cli_repo: "glab"
+        config_repo: "$HOME/.config/glab-cli"
+        rights: ""
+    - name: Setup command to eval
+      ansible.builtin.set_fact:
+        cmd: "{{ var_repo_host }}={{ target_repository }} {{ cli_repo }}"
+        config_file: "{{ config_repo }}/config.yml"
+        yq_search: ".hosts.\"{{ target_repository }}\".email"

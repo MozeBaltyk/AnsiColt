@@ -1,4 +1,5 @@
-- hosts: '{{target|default("localhost")}}'
+- name: Connect repository
+  hosts: '{{target|default("localhost")}}'
   connection: local
   gather_facts: false
 

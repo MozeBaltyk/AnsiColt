@@ -5,17 +5,21 @@
   ansible.builtin.include_role:
     name: setup_repo_cmd
 
-- block:
+- name: Block connect repo
+  block:
     - name: Check auth status
-      shell: "{{ CMD }} auth status"
+      ansible.builtin.shell: "{{ cmd }} auth status"
       register: auth_status
+      changed_when: false
 
-    - debug:
+    - name: Debug
+      ansible.builtin.debug:
         var: auth_status['stdout']
 
   rescue:
-    - debug:
+    - name: Debug
+      ansible.builtin.debug:
         msg: |
-          # Run manually command: "{{ CMD }} auth login {{ RIGHTS }}"
+          # Run manually command: "{{ cmd }} auth login {{ rights }}"
           #
           # Then relaunch your command...

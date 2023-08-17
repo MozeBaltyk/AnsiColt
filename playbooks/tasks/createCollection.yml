@@ -7,43 +7,43 @@
 
   pre_tasks:
     # Email Authors for both collection and roles
-    - block:
+    - name: Block email authors
+      when: (global_author_email is not defined) or (global_author_email|length == 0)
+      run_once: true
+      block:
         - name: Give an email to ansible collection
-          pause:
+          ansible.builtin.pause:
             prompt: "Give an email that we can set as author of this collection (ENTER take from git config global)"
           register: prompt_email
 
         - name: Set authors email
-          set_fact:
+          ansible.builtin.set_fact:
             global_author_email: "{{ prompt_email['user_input'] }}"
           when: prompt_email['user_input']|length != 0
 
         - block:
             - name: Get User.Email from git global config to define authors of the collection
-              shell: "git config --global user.email"
+              ansible.builtin.shell: "git config --global user.email"
               register: gitconfig_email
 
             - name: Set authors email from git config
-              set_fact:
+              ansible.builtin.set_fact:
                 global_author_email: "{{ gitconfig_email['stdout'] }}"
           when: prompt_email['user_input']|length == 0
 
-      when: (global_author_email is not defined) or (global_author_email|length == 0)
-      run_once: true
-
     # Description for Project and Collection
-    - block:
+    - name: Block description
+      when: (global_collection_description is not defined) or (global_collection_description|length == 0)
+      run_once: true
+      block:
         - name: Set description to ansible collection
-          pause:
+          ansible.builtin.pause:
             prompt: "Please give a description to your collection"
           register: prompt_description
 
         - name: Set your description coming from prompt
-          set_fact:
+          ansible.builtin.set_fact:
             global_collection_description: "{{ prompt_description['user_input'] }}"
-
-      when: (global_collection_description is not defined) or (global_collection_description|length == 0)
-      run_once: true
 
   roles:
     - { role: connect_to_repository,  tags: repository, when: global_target_repository|length != 0 }

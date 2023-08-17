@@ -1,5 +1,7 @@
 ---
 # tasks file for createRole
-- import_tasks: prerequisites.yml
+- name: Import prerequis
+  ansible.builtin.import_tasks: prerequisites.yml
 
-- import_tasks: create.yml
+- name: Import create role
+  ansible.builtin.import_tasks: create.yml

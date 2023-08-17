@@ -1,19 +1,22 @@
 ---
-- name: Get your current ansible version
-  shell: ansible --version | head -1 | awk '{sub(/]/,"");print $NF}'
+- name: Get your current ansible version # noqa: command-instead-of-module
+  ansible.builtin.shell: set -o pipefail && ansible --version | head -1 | awk '{sub(/]/,"");print $NF}'
+  args:
+    executable: /bin/bash
   register: version
+  changed_when: false
 
 - name: Set ansible_current_version
-  set_fact:
+  ansible.builtin.set_fact:
     ansible_current_version: "{{ version['stdout'] }}"
 
 - name: Initialize a new Collection
-  command: "ansible-galaxy collection init {{ collection_namespace }}.{{ collection_name }} --init-path ~/"
+  ansible.builtin.command: "ansible-galaxy collection init {{ collection_namespace }}.{{ collection_name }} --init-path ~/"
   args:
     creates: "~/{{ collection_namespace }}/{{ collection_name }}"
 
 - name: Create complementary directories
-  file:
+  ansible.builtin.file:
     path: '{{ item }}'
     state: 'directory'
     recurse: true
@@ -26,11 +29,13 @@
     - '~/{{ collection_namespace }}/{{ collection_name }}/playbooks/templates'
     - '~/{{ collection_namespace }}/{{ collection_name }}/playbooks/tasks'
     - '~/{{ collection_namespace }}/{{ collection_name }}/scripts/prerequis'
+    - '~/{{ collection_namespace }}/{{ collection_name }}/meta/'
 
 - name: Push templates inside collection
-  template:
+  ansible.builtin.template:
     src: '{{ item.src }}'
     dest: '{{ item.dest }}'
+    mode: u=rw,g=r,o=r
   loop:
     - { src: 'plugins/inventory/hosts.yml',                dest: '~/{{ collection_namespace }}/{{ collection_name }}/plugins/inventory/hosts.yml' }
     - { src: 'collections/pre-commit-config.yaml',         dest: '~/{{ collection_namespace }}/{{ collection_name }}/.pre-commit-config.yaml' }
@@ -52,9 +57,10 @@
     - { src: 'collections/meta/ee-requirements.yml',       dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/ee-requirements.yml' }
 
 - name: Push files inside collection
-  copy:
+  ansible.builtin.copy:
     src: '{{ item.src }}'
     dest: '{{ item.dest }}'
+    mode: u=rw,g=r,o=r
   loop:
     - { src: 'playbooks/ping.yml',                         dest: '~/{{ collection_namespace }}/{{ collection_name }}/playbooks/tasks/ping.yml' }
     - { src: 'playbooks/test.yml',                         dest: '~/{{ collection_namespace }}/{{ collection_name }}/playbooks/tasks/test.yml' }
