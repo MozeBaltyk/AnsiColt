@@ -69,7 +69,7 @@ DESCRIPTION
 
 Available recipes:
     init PROJECT *GROUP      # Create a new ansible collection on repository.
-    role PROJECT ROLE        # Create a new ansible role inside an existing collection.
+    role GROUP PROJECT ROLE  # Create a new ansible role inside an existing collection.
     release PROJECT *VERSION # Release collection on your repository to the given version in command or in galaxy.yml.
     clone PROJECT            # Clone a project from repository keeping directory structure for ansible.
     clone_all *GROUP         # Git clone all projects from your repository, or if argument provided only from specific group.
