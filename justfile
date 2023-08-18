@@ -51,7 +51,12 @@ role GROUP PROJECT ROLE:
     @just _precheck_role {{ROLE}}
 
     #!/usr/bin/env bash
-    ansible-playbook playbooks/tasks/createRole.yml -e role="{{ROLE}}" -e project="{{PROJECT}}" -e namespace="{{GROUP}}"
+    cd {{GROUP}}/{{PROJECT}}; email=$(git config --local user.email); cd -
+    ansible-playbook playbooks/tasks/createRole.yml \
+    -e role="{{ROLE}}" \
+    -e project="{{PROJECT}}" \
+    -e namespace="{{GROUP}}" \
+    -e email="${email}"
 
 # Release collection on your repository to the given version in command or in galaxy.yml.
 release PROJECT *VERSION:

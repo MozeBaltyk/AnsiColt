@@ -39,7 +39,7 @@ _init project type repository *group:
       while true; do
         read -p "Give a email to associate to this repository :  "  email
         if echo $email | grep -q '^[a-zA-Z0-9.]*@[a-zA-Z0-9]*\.[a-zA-Z0-9]*$'; then
-          printf "\e[1;34m[INFO]\e[m This email will be set in all projects git config.\n";
+          printf "\e[1;34m[INFO]\e[m This email will be set in all projects that you will create in the git config.\n";
           break;
         else
           printf "\e[1;31m[ERROR]\e[m This does NOT look like an email.\n"
