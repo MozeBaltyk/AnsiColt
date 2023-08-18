@@ -50,8 +50,7 @@ init PROJECT *GROUP:
 role GROUP PROJECT ROLE:
     @just _precheck_role {{ROLE}}
 
-    #!/usr/bin/env bash
-    cd {{GROUP}}/{{PROJECT}}; email=$(git config --local user.email); cd -
+    cd ~/{{GROUP}}/{{PROJECT}}; email=$(git config --local user.email); cd -; \
     ansible-playbook playbooks/tasks/createRole.yml \
     -e role="{{ROLE}}" \
     -e project="{{PROJECT}}" \
