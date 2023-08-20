@@ -2,7 +2,7 @@
 # defaults file for createCollection
 collection_name: "{{ global_collection_name }}"
 collection_namespace: "{{ global_collection_namespace }}"
-collection_repository: "{{ global_target_repository }}"
+collection_repository_https: "{{ 'https://' + global_target_repository if global_target_repository | length > 0 else '~' }}"
 
 project_path:           "~/{{ collection_namespace }}/{{ collection_name }}"
 

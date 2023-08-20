@@ -2,7 +2,9 @@
 
 For everytime I want to quickly start a new ansible collection.
 
-[![License: MIT](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/MIT)
+
+[![Releases](https://img.shields.io/github/release/MozeBaltyk/AnsiColt)](https://github.com/MozeBaltyk/AnsiColt/releases)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/apache-2-0/)
 
 ## What's for ?
 
@@ -147,8 +149,6 @@ Pre-commit:
 - https://pre-commit.com/
 - https://maikel.tiny-host.nl/ansible-linting-pre-commit/
 
-About publishing Collection in Ansible-galaxy:
-- https://ericsysmin.com/2020/05/02/ansible-collections-automating-the-release-process-to-galaxy/
 
 # Special thanks 📢
 
@@ -160,10 +160,8 @@ About publishing Collection in Ansible-galaxy:
 
 Some ideas:
 - Give LICENCE choice during the creation of the collection
-- Propose different type of collection oriented to different purpose...
 - Possibility to improve this collection with plugins
-- Github workflow to Autogenerate README
-- Github workflow to Autogenerate Changelog
+- Github workflow to Autogenerate README / Documentation
 - Github workflow to publish in Galaxy
 
 

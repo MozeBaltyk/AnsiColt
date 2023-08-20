@@ -25,10 +25,10 @@ tags:
 
 dependencies: {}
 
-repository: https://{{ collection_repository }}/{{ collection_namespace }}/{{ collection_name }}
-documentation: https://{{ collection_repository }}/{{ collection_namespace }}/{{ collection_name }}/README.md
-homepage: https://{{ collection_repository }}/{{ collection_namespace }}/{{ collection_name }}
-issues: https://{{ collection_repository }}/{{ collection_namespace }}/{{ collection_name }}/issues
+repository: {{ collection_repository_https }}/{{ collection_namespace }}/{{ collection_name }}
+documentation: {{ collection_repository_https }}/{{ collection_namespace }}/{{ collection_name }}/README.md
+homepage: {{ collection_repository_https }}/{{ collection_namespace }}/{{ collection_name }}
+issues: {{ collection_repository_https }}/{{ collection_namespace }}/{{ collection_name }}/issues
 
 build_ignore:
   - .gitignore
