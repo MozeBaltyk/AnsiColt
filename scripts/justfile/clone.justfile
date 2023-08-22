@@ -72,7 +72,7 @@ _clone project repository:
         printf "\e[1;32m[OK]\e[m Project ${project_to_clone} exist, Let\'s clone it... \n"
         printf "\e[1;34m[INFO]\e[m # git clone https://{{repository}}/${project_lowercase}.git $HOME/${project_lowercase}\n"
         #Could be also done with gh/glab repo clone 
-        git clone https://{{repository}}/${project_lowercase}.git $HOME/${project_to_clone}
+        git clone --recursive https://{{repository}}/${project_lowercase}.git $HOME/${project_to_clone}
 
         # Set user/email in git local otherwise the push are going to be with your global user.
         cd $HOME/${project_to_clone}; git config --local --replace-all user.name ${user}; cd - 
