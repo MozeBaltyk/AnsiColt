@@ -1,11 +1,10 @@
 ---
 name: CI
 on:
-  push:
-    branches: [master, main, "release/v*"]
   pull_request:
     branches: [master, main, "release/v*"]
-
+  workflow_dispatch: 
+  
 env:
   NAMESPACE: mozebaltyk
   COLLECTION_NAME: ansicolt
