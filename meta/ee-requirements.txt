@@ -1,0 +1,5 @@
+ansible-core>=2.12.0
+#For ansible.utils
+netaddr
+PyYAML>=5.4.1
+jsonpatch

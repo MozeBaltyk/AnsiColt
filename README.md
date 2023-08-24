@@ -43,8 +43,15 @@ Yes, You got it... It's an Ansible Collection to create an Ansible Collection, m
 
 Linux Host debian or RHEL (can be a VM or your WSL).
 
-- [✅ Git](#git-) 
+- [✅ curl](#curl-) 
 
+the installer script will install: 
+- arkade
+- just
+- gh / glab-cli
+- ansible-core
+
+finally this collection and aliases...
 
 ## Basic installation
 
