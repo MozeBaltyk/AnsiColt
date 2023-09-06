@@ -13,7 +13,7 @@ env:
   ANSIBLE_COLLECTIONS_PATHS: ${{ github.workspace }}
 
 jobs:
-  run-yamllint:
+  run-lintter:
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
@@ -23,9 +23,6 @@ jobs:
         run: |
           yamllint .
 
-  run-ansible-lint:
-    runs-on: ubuntu-latest
-    steps:
       - name: 🚀 Run ansible-lint
         uses: ansible/ansible-lint@main
 
