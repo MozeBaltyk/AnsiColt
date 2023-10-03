@@ -5,13 +5,17 @@ else ifneq ("$(wildcard /etc/debian_version)","")
 endif
 
 .PHONY: all
-## everythings below
-all: images arkade collections pythons bindeps
+## all prerequisites (keep the phony order)
+all: pythons bindeps collections arkade images
+
+.PHONY: docker-builder
+## all prerequisites for a docker container (keep the phony order)
+docker-builder: pythons bindeps collections arkade
 
 .PHONY: images
 ## Load images in files directories of each roles (since too big, those are in the .gitignore)
 images:
-	./load.sh
+	./podman-load.sh
 
 .PHONY: arkade
 ## Install admin kubernetes commands
@@ -31,9 +35,9 @@ pythons:
 .PHONY: bindeps
 ## Install packages rpm/dep defined in ./meta/ee-bindeps.txt
 bindeps:
-        @echo "## Install Bindeps dependancies ##"
-        @python3 -m pip install bindep
-        @for i in $$( python3 -m bindep -bf ../../meta/ee-bindeps.txt ); do echo "### $$i ###"; sudo $(PKG_MANAGER) install -y $$i; done
+	@echo "## Install Bindeps dependancies ##"
+	@python3 -m pip install bindep
+	@for i in $$( python3 -m bindep -bf ../../meta/ee-bindeps.txt ); do echo "$$i"; sudo $(PKG_MANAGER) install -y $$i; done
 
 # keep it at the end of your Makefile
 .DEFAULT_GOAL := show-help
