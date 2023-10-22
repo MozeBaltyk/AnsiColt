@@ -77,6 +77,7 @@ DESCRIPTION
      Arguments without '*' in front are mandatory, the one without are not mandatory. Default variables can be redefined before the recipe.
 
 Available recipes:
+    list                     # List all your repositories configured.
     init PROJECT *GROUP      # Create a new ansible collection on repository.
     role GROUP PROJECT ROLE  # Create a new ansible role inside an existing collection.
     release PROJECT *VERSION # Release collection on your repository to the given version in command or in galaxy.yml.

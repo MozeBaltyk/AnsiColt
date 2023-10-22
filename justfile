@@ -41,6 +41,10 @@ _precheck_role NAME:
         exit 1
     fi
 
+# List all your repositories configured.
+list:
+    @just -f scripts/justfile/list.justfile _list
+
 # Create a new ansible collection on repository.
 init PROJECT *GROUP:
     @just _precheck_collection {{PROJECT}}
