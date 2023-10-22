@@ -1,6 +1,6 @@
 set shell := ["bash", "-uc"]
 
-# Release collection to the wanted version
+# Start a Blank project
 _blank project type repository *group:
     #!/usr/bin/env bash
     repository_type=$(curl -Lis https://{{repository}}/ | egrep -oi "<title>.*GitHub<\/title>|<title>.*GitLab<\/title>" | awk '{sub(/<\/title>/,"");print $NF}' || echo "unknown repo")
@@ -17,7 +17,7 @@ _blank project type repository *group:
         #https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps#available-scopes
         OPTIONS="-s read:project,repo,write:packages,read:org,workflow"
     elif [[ "$repository_type" == "GitLab" ]]; then
-        VAR_REPO_HOST="GLAB_HOST"
+        VAR_REPO_HOST="GITLAB_HOST"
         CLI_REPO="glab"
         CONFIG_REPO="$HOME/.config/glab-cli"
         CONFIG_FILE="${CONFIG_REPO}/config.yml"
@@ -31,7 +31,7 @@ _blank project type repository *group:
     fi
 
     # Connect to repo before
-    eval "${CMD} auth status"
+    # eval "${CMD} auth status"
 
     # Get the email associated with repo or set it if missing
     if [[ $(yq "${YQ_SEARCH}" ${CONFIG_FILE}) == null ]]; then

@@ -40,7 +40,7 @@
   block:
     - name: Set vars for GitLab
       ansible.builtin.set_fact:
-        var_repo_host: "GLAB_HOST"
+        var_repo_host: "GITLAB_HOST"
         cli_repo: "glab"
         config_repo: "$HOME/.config/glab-cli"
         rights: ""

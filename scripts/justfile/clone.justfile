@@ -1,4 +1,4 @@
-set shell := ["bash", "-uc"]
+set shell := ["bash", "-euc"]
 
 # Clone a project from repository keeping directory structure for ansible.
 _clone project repository:
@@ -19,7 +19,7 @@ _clone project repository:
         #https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps#available-scopes
         OPTIONS="-s read:project,repo,write:packages,read:org,workflow"
     elif [[ "$repository_type" == "GitLab" ]]; then
-        VAR_REPO_HOST="GLAB_HOST"
+        VAR_REPO_HOST="GITLAB_HOST"
         CLI_REPO="glab"
         CONFIG_REPO="$HOME/.config/glab-cli"
         CONFIG_FILE="${CONFIG_REPO}/config.yml"
@@ -36,7 +36,7 @@ _clone project repository:
     #printf "CMD: \e[1;32m ${CMD} \e[m\n"
 
     # Connect to repo before
-    eval "${CMD} auth status"
+    # eval "${CMD} auth status"
 
     # Get the email associated with repo or set it if missing
     if [[ $(yq "${YQ_SEARCH}" ${CONFIG_FILE}) == null ]]; then
@@ -70,9 +70,14 @@ _clone project repository:
         project_to_clone=$(echo ${project_found} | awk '{print $1;}')
         project_lowercase=$(echo ${project_to_clone} | tr '[:upper:]' '[:lower:]')
         printf "\e[1;32m[OK]\e[m Project ${project_to_clone} exist, Let\'s clone it... \n"
-        printf "\e[1;34m[INFO]\e[m # git clone https://{{repository}}/${project_lowercase}.git $HOME/${project_lowercase}\n"
-        #Could be also done with gh/glab repo clone 
-        git clone --recursive https://{{repository}}/${project_lowercase}.git $HOME/${project_to_clone}
+
+        # Try first with gh/glab CLI to keep protocol
+        printf "\e[1;34m[INFO]\e[m ${CMD} repo clone ${project_lowercase} $HOME/${project_to_clone} -- --recursive\n"
+        eval "${CMD} repo clone ${project_lowercase} $HOME/${project_to_clone} -- --recursive" || {
+          # if failed, retry with git clone on https
+          printf "\e[1;34m[INFO]\e[m Second trial with in https: git clone https://{{repository}}/${project_lowercase}.git $HOME/${project_to_clone}\n"
+          git clone --recursive https://{{repository}}/${project_lowercase}.git $HOME/${project_to_clone}
+        }
 
         # Set user/email in git local otherwise the push are going to be with your global user.
         cd $HOME/${project_to_clone}; git config --local --replace-all user.name ${user}; cd - 

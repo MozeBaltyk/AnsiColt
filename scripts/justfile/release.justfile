@@ -17,7 +17,7 @@ _release project repository *version:
         #https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps#available-scopes
         OPTIONS="-s read:project,repo,write:packages,read:org,workflow"
     elif [[ "$repository_type" == "GitLab" ]]; then
-        VAR_REPO_HOST="GLAB_HOST"
+        VAR_REPO_HOST="GITLAB_HOST"
         CLI_REPO="glab"
         CONFIG_REPO="$HOME/.config/glab-cli"
         CONFIG_FILE="${CONFIG_REPO}/config.yml"
@@ -31,7 +31,7 @@ _release project repository *version:
     fi
 
     # Connect to repo before
-    eval "${CMD} auth status"
+    # eval "${CMD} auth status"
 
     # Check if project exist and set path
     number_of_projects_found=$( eval "${CMD} repo list | grep -iw "^.*/{{ project }}"| wc -l" )
