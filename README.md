@@ -32,7 +32,7 @@ yes, but it does not:
 - It also add somes extras customs scripts, linter, .gitignore and other tricks...
 - By default set your project with a License Apache-2.0 (to come later a menu with diverse type of license)
 - When cloning or creating projects, some good pratices are applied, like git config user in each project directory.    
-  Which avoid to push later on with the global which can be different. 
+  Which avoid to push later on with the global email which can be different for each repositories. 
 
 Yes, You got it... It's an Ansible Collection to create an Ansible Collection, make sense! 
 
@@ -63,7 +63,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/MozeBaltyk/AnsiColt/main/s
 
 By default, *github.com* is configured as default repository and project are *private*.
 
-This behavior can be change:
+Those value can be adapted on the run:
 - by changing the value in `$HOME/.confg/aliases/AnsiColt`
 - redefine env var with `export REPOSITORY=gitlab.example.com`
 - or in the command `colt REPOSITORY=gitlab.example.com install AnsiColt`
