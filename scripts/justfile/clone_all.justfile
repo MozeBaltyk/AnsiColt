@@ -25,7 +25,7 @@ _clone_all repository group='NULL':
         CONFIG_FILE="${CONFIG_REPO}/config.yml"
         YQ_SEARCH=".hosts.\"{{repository}}\".email"
         # Setup command to eval
-        CMD="${VAR_REPO_HOST}={{repository}} ${CLI_REPO}"
+        CMD="NO_COLORS=1 NO_PROMPT=1 ${VAR_REPO_HOST}={{repository}} ${CLI_REPO}"
     else
         printf "\e[1;31m[ERROR]\e[m unknown repository or not reachable.\n"
         exit 1

@@ -30,7 +30,7 @@ _setup_repo_cmd repository:
         CLI_REPO="glab"
         CONFIG_REPO="$HOME/.config/glab-cli"
         # Setup command to eval
-        CMD="${VAR_REPO_HOST}={{repository}} ${CLI_REPO}"
+        CMD="NO_COLORS=1 NO_PROMPT=1 ${VAR_REPO_HOST}={{repository}} ${CLI_REPO}"
         OPTIONS=""
     else
         printf "\e[1;31m[ERROR]\e[m unknown repository.\n"

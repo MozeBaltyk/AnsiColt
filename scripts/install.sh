@@ -301,11 +301,7 @@ install_aliases() {
   printf "\e[1;33m[CHANGE]\e[m Installing ansiColt aliases...\n"
   mkdir -p ~/.config/aliases
 
-  cat << EOF > $HOME/.config/aliases/AnsiColt
-export REPOSITORY=github.com
-export TYPE=private
-$aliases
-EOF
+  echo "$aliases" > $HOME/.config/aliases/AnsiColt
 
   if [[ "$SHELL" == *"/zsh" ]]; then
     grep -wq '~/.config/aliases' $HOME/.zshrc || echo "[ -d ~/.config/aliases ] && source ~/.config/aliases/*" >> $HOME/.zshrc && true

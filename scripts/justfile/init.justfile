@@ -23,7 +23,7 @@ _init project type repository *group:
         CONFIG_FILE="${CONFIG_REPO}/config.yml"
         YQ_SEARCH=".hosts.\"{{repository}}\".email"
         # Setup command to eval
-        CMD="${VAR_REPO_HOST}={{repository}} ${CLI_REPO}"
+        CMD="NO_COLORS=1 NO_PROMPT=1 ${VAR_REPO_HOST}={{repository}} ${CLI_REPO}"
         OPTIONS=""
     else
         printf "\e[1;31m[ERROR]\e[m unknown repository or not reachable.\n"
@@ -108,8 +108,14 @@ _init project type repository *group:
     else
         printf "\e[1;34m[INFO]\e[m ${CMD} repo create --{{type}} ${project_to_create}\n"
         eval "${CMD} repo create --{{type}} ${project_to_create}"
-        #Could be also with gh/glab repo clone 
-        git clone https://{{repository}}/${project_lowercase}.git ${project_path}
+        
+        # Try first with gh/glab CLI to keep protocol
+        printf "\e[1;34m[INFO]\e[m ${CMD} repo clone ${project_lowercase} ${project_path}\n"
+        eval "${CMD} repo clone ${project_lowercase} ${project_path}" || {
+          # if failed, retry with git clone on https
+          printf "\e[1;34m[INFO]\e[m Second trial with in https: git clone https://{{repository}}/${project_lowercase}.git ${project_path}\n"
+          git clone https://{{repository}}/${project_lowercase}.git ${project_path}
+        }
 
         # Set user/email in git local otherwise the push are going to be with your global user.
         cd ${project_path}; git config --local --replace-all user.name ${user}; cd -

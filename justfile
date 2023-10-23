@@ -1,7 +1,7 @@
 set shell := ["bash", "-uc"]
 
-REPOSITORY    :=  env_var('REPOSITORY')
-TYPE          :=  env_var('TYPE')
+REPOSITORY    :=  env_var_or_default('REPOSITORY', "github.com") 
+TYPE          :=  env_var_or_default('TYPE', "private")
 
 # Lists all available commands in the justfile.
 _help:
