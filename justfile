@@ -1,7 +1,7 @@
 set shell := ["bash", "-uc"]
 
-REPOSITORY    :=  "github.com"
-TYPE          :=  "private"
+REPOSITORY    :=  env_var('REPOSITORY')
+TYPE          :=  env_var('TYPE')
 
 # Lists all available commands in the justfile.
 _help:
@@ -41,7 +41,7 @@ _precheck_role NAME:
         exit 1
     fi
 
-# List all your repositories configured.
+# List all your configured repositories.
 list:
     @just -f scripts/justfile/list.justfile _list
 
