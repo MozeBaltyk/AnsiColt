@@ -25,19 +25,25 @@ arkade:
 .PHONY: collections
 ## Install ansible collection defined in ./deps/requirements.yml
 collections:
-	ansible-galaxy install -r ../../meta/ee-requirements.yml
+	@printf "\e[1;34m[INFO]\e[m ## Install Ansible Collections ##\n"
+	@ansible-galaxy install -r ../../meta/ee-requirements.yml
+	@printf "\e[1;32m[OK]\e[m Ansible Collections installed.\n"
 
 .PHONY: pythons
 ## Install pythons packages defined in ./deps/requirements.txt
 pythons:
-	python3 -m pip install -r ../../meta/ee-requirements.txt
+	@printf "\e[1;34m[INFO]\e[m ## Install Pip packages ##\n"
+	@python3 -m pip install -r ../../meta/ee-requirements.txt
+	@printf "\e[1;32m[OK]\e[m Pip packages installed.\n"
 
 .PHONY: bindeps
 ## Install packages rpm/dep defined in ./deps/bindeps
 bindeps:
-	@echo "## Install Bindeps dependancies ##"
+	@printf "\e[1;34m[INFO]\e[m ## Install Bindeps package ##\n"
 	@python3 -m pip install bindep
-	@for i in $$( python3 -m bindep -bf ../../meta/ee-bindeps.txt ); do echo "$$i"; sudo $(PKG_MANAGER) install -y $$i; done
+	@printf "\e[1;34m[INFO]\e[m ## Install Bindeps dependencies ##\n"
+	@for i in $$( python3 -m bindep -bf ../../meta/ee-bindeps.txt ); do echo "### $$i ###"; sudo $(PKG_MANAGER) install -y $$i; done
+	@printf "\e[1;32m[OK]\e[m All packages installed.\n"
 
 # keep it at the end of your Makefile
 .DEFAULT_GOAL := show-help
