@@ -20,12 +20,12 @@ jobs:
           mkdir -p  $HOME/.arkade/bin/
           sudo mv arkade $HOME/.arkade/bin/
           export PATH=$PATH:$HOME/.arkade/bin/
-          ls -l $HOME/.arkade/bin/
-          just --help
-
+          arkade version
+          
       - name: Install Just Commandliner
         run: |
           arkade get just
+          just --version
 
       - name: Get justfile help
         run: |
