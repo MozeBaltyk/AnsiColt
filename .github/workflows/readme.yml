@@ -10,16 +10,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install dependencies
+      - name: Install Arkade
         run: |
-          wget -qO - 'https://proget.makedeb.org/debian-feeds/makedeb.pub' | gpg --dearmor | sudo tee /usr/share/keyrings/makedeb-archive-keyring.gpg 1> /dev/null
-          echo 'deb [signed-by=/usr/share/keyrings/makedeb-archive-keyring.gpg arch=all] https://proget.makedeb.org/ makedeb main' | sudo tee /etc/apt/sources.list.d/makedeb.list
-          sudo apt update
-          sudo apt install makedeb
-          git clone 'https://mpr.makedeb.org/just'
-          cd just
-          makedeb -si
-          sudo apt install just
+          LATEST_VERSION_URL="https://api.github.com/repos/alexellis/arkade/releases/latest"
+          LATEST_VERSION=$(curl -s "${LATEST_VERSION_URL}" | grep '"tag_name":' | cut -d'"' -f4)
+          DOWNLOAD_URL="https://github.com/alexellis/arkade/releases/download"
+          curl -LO "${DOWNLOAD_URL}"/"${LATEST_VERSION}"/arkade > /dev/null 2>&1
+          chmod +x arkade && sudo mv arkade /usr/local/bin/
+
+      - name: Install Just Commandliner
+        run: |
+          arkade get just
+
+      - name: Get justfile help
+        run: |
           JUSTFILE_HELP=$(just)
 
       - uses: Readme-Workflows/readme-replacer@v1.0.1
