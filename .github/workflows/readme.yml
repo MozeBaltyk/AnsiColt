@@ -17,6 +17,7 @@ jobs:
           DOWNLOAD_URL="https://github.com/alexellis/arkade/releases/download"
           curl -LO "${DOWNLOAD_URL}"/"${LATEST_VERSION}"/arkade > /dev/null 2>&1
           chmod +x arkade 
+          mkdir -p  $HOME/.arkade/bin/
           sudo mv arkade $HOME/.arkade/bin/
           export PATH=$PATH:$HOME/.arkade/bin/
           ls -l $HOME/.arkade/bin/
