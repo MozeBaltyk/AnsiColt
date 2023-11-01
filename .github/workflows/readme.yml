@@ -21,9 +21,6 @@ jobs:
           sudo mv arkade $HOME/.arkade/bin/
           export PATH=$PATH:$HOME/.arkade/bin/
           arkade version
-          
-      - name: Install Just Commandliner
-        run: |
           arkade get just
           just --version
 
