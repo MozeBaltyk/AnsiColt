@@ -24,14 +24,19 @@ jobs:
           arkade version
           arkade get just
           just --version
-          echo "::set-output name=JUSTFILE_HELP::$(just)"
 
-      - uses: Readme-Workflows/readme-replacer@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          JUSTFILE_HELP: ${{ steps.get_justfile_help.outputs.JUSTFILE_HELP }}
-        with:
-          # Those are all default values and only are shown for demonstration
-          TEMPLATE_FILE: './.github/TEMPLATE.md'
-          COMMIT_FILE: './.github/README.md'
-          CUSTOM_REPLACER_FILE: './.github/customReplacer.json'
+      - name: Update Readme
+        run: |
+          ./scripts/docs/autogenerate_README.sh
+
+      #echo "::set-output name=JUSTFILE_HELP::$(just)"
+
+      #- uses: Readme-Workflows/readme-replacer@v1.0.1
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #    JUSTFILE_HELP: ${{ steps.get_justfile_help.outputs.JUSTFILE_HELP }}
+      #  with:
+      #    # Those are all default values and only are shown for demonstration
+      #    TEMPLATE_FILE: './.github/TEMPLATE.md'
+      #    COMMIT_FILE: './.github/README.md'
+      #    CUSTOM_REPLACER_FILE: './.github/customReplacer.json'
