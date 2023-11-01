@@ -12,6 +12,8 @@ jobs:
 
       - name: Install dependencies
         run: |
+          export MAKEDEB_RELEASE='makedeb'
+          bash -c "$(wget -qO - 'https://shlink.makedeb.org/install')"
           git clone 'https://mpr.makedeb.org/just'
           cd just
           makedeb -si
