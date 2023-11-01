@@ -10,7 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Arkade
+      - name: Get Justfile Help
+        id: get_justfile_help
         run: |
           LATEST_VERSION_URL="https://api.github.com/repos/alexellis/arkade/releases/latest"
           LATEST_VERSION=$(curl -s "${LATEST_VERSION_URL}" | grep '"tag_name":' | cut -d'"' -f4)
@@ -23,14 +24,12 @@ jobs:
           arkade version
           arkade get just
           just --version
-
-      - name: Get justfile help
-        run: |
-          JUSTFILE_HELP=$(just)
+          echo "::set-output name=JUSTFILE_HELP::$(just)"
 
       - uses: Readme-Workflows/readme-replacer@v1.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JUSTFILE_HELP: ${{ steps.get_justfile_help.outputs.JUSTFILE_HELP }}
         with:
           # Those are all default values and only are shown for demonstration
           TEMPLATE_FILE: './.github/TEMPLATE.md'
