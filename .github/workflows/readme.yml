@@ -24,6 +24,7 @@ jobs:
           arkade version
           arkade get just
           just --version
+          ls -l $HOME/scripts
           cd $HOME/scripts/docs/
           ls -la
           sh -c "./autogenerate_README.sh"
