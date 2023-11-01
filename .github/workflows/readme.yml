@@ -6,7 +6,7 @@ jobs:
   readme:
     runs-on: ubuntu-latest
     name: Update AnsiColt Readme
-    
+
     if: github.repository == 'mozebaltyk/ansicolt'
     permissions:
       actions: write
@@ -30,9 +30,6 @@ jobs:
           arkade get just
           just --version
           cd scripts/docs/ && sh -c "./autogenerate_README.sh" && cat ../../README.md
-
-      - name: Git push
-        run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git push origin
