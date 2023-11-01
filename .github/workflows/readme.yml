@@ -1,6 +1,6 @@
 name: Update AnsiColt Readme
 on:
-  push:
+  workflow_dispatch:
 
 jobs:
   readme:
@@ -17,24 +17,4 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Update Readme
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          LATEST_VERSION_URL="https://api.github.com/repos/alexellis/arkade/releases/latest"
-          LATEST_VERSION=$(curl -s "${LATEST_VERSION_URL}" | grep '"tag_name":' | cut -d'"' -f4)
-          DOWNLOAD_URL="https://github.com/alexellis/arkade/releases/download"
-          curl -LO "${DOWNLOAD_URL}"/"${LATEST_VERSION}"/arkade > /dev/null 2>&1
-          chmod +x arkade 
-          mkdir -p  $HOME/.arkade/bin/
-          sudo mv arkade $HOME/.arkade/bin/
-          export PATH=$PATH:$HOME/.arkade/bin/
-          arkade version
-          arkade get just
-          just --version
-          cd scripts/docs/ && sh -c "./autogenerate_README.sh" && cat ../../README.md
-          cd -
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add README.md
-          git commit -m "⚡ Update README"
-          git push origin
+        uses: ./.github/actions/update-readme
