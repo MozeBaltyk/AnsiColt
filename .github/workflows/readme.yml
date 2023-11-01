@@ -27,7 +27,9 @@ jobs:
 
       - name: Update Readme
         run: |
-          ./scripts/docs/autogenerate_README.sh
+          cd ./scripts/docs/
+          ./autogenerate_README.sh
+          cat README.md
 
       #echo "::set-output name=JUSTFILE_HELP::$(just)"
 
