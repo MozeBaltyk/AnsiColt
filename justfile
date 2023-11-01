@@ -104,7 +104,7 @@ build PROJECT NAMESPACE:
     ansible-galaxy collection build $HOME/{{NAMESPACE}}/{{PROJECT}} --output-path $HOME/{{NAMESPACE}}/{{PROJECT}}
 
 # Test 
-_test PROJECT ROLE *NAMESPACE:
+test PROJECT ROLE *NAMESPACE:
     #!/usr/bin/env bash
     echo {{PROJECT}}
     echo {{ROLE}}
