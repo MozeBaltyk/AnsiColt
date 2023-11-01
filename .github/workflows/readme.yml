@@ -10,8 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Get Justfile Help
-        id: get_justfile_help
+      - name: Update Readme
         run: |
           LATEST_VERSION_URL="https://api.github.com/repos/alexellis/arkade/releases/latest"
           LATEST_VERSION=$(curl -s "${LATEST_VERSION_URL}" | grep '"tag_name":' | cut -d'"' -f4)
@@ -26,14 +25,8 @@ jobs:
           just --version
           cd scripts/docs/ && sh -c "./autogenerate_README.sh" && cat ../../README.md
 
-      #echo "::set-output name=JUSTFILE_HELP::$(just)"
-
-      #- uses: Readme-Workflows/readme-replacer@v1.0.1
-      #  env:
-      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #    JUSTFILE_HELP: ${{ steps.get_justfile_help.outputs.JUSTFILE_HELP }}
-      #  with:
-      #    # Those are all default values and only are shown for demonstration
-      #    TEMPLATE_FILE: './.github/TEMPLATE.md'
-      #    COMMIT_FILE: './.github/README.md'
-      #    CUSTOM_REPLACER_FILE: './.github/customReplacer.json'
+      - name: Create release tag
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git push origin
