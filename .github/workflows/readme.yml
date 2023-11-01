@@ -24,10 +24,7 @@ jobs:
           arkade version
           arkade get just
           just --version
-          ls -la /home/runner/work/AnsiColt/AnsiColt
-          cd scripts/docs/
-          ls -la
-          sh -c "./autogenerate_README.sh"
+          cd scripts/docs/ && sh -c "./autogenerate_README.sh" && cat ../../README.md
 
       #echo "::set-output name=JUSTFILE_HELP::$(just)"
 
