@@ -16,8 +16,11 @@ jobs:
           LATEST_VERSION=$(curl -s "${LATEST_VERSION_URL}" | grep '"tag_name":' | cut -d'"' -f4)
           DOWNLOAD_URL="https://github.com/alexellis/arkade/releases/download"
           curl -LO "${DOWNLOAD_URL}"/"${LATEST_VERSION}"/arkade > /dev/null 2>&1
-          chmod +x arkade && sudo mv arkade /usr/local/bin/
+          chmod +x arkade 
+          sudo mv arkade $HOME/.arkade/bin/
           export PATH=$PATH:$HOME/.arkade/bin/
+          ls -l $HOME/.arkade/bin/
+          just --help
 
       - name: Install Just Commandliner
         run: |
