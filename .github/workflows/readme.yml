@@ -12,6 +12,9 @@ jobs:
 
       - name: Install dependencies
         run: |
+          git clone 'https://mpr.makedeb.org/just'
+          cd just
+          makedeb -si
           sudo apt install just
           JUSTFILE_HELP=$(just)
 
