@@ -24,9 +24,9 @@ jobs:
           arkade version
           arkade get just
           just --version
+          ls -la
           cd ./scripts/docs/
           ./autogenerate_README.sh
-          cat README.md
 
       #echo "::set-output name=JUSTFILE_HELP::$(just)"
 
