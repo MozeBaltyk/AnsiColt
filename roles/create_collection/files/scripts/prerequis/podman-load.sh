@@ -1,6 +1,14 @@
 #!/bin/bash
 set -eo pipefail
 
+### podman-load.sh
+# This scripts have for purpose to upload images in you collections before to execute playbooks.
+#  
+# It have to methode to do it:
+#   - search for images in your helm charts: roles/*/files/helm/*.tgz
+#   - list images in meta/ee-images.txt  
+###
+
 if [[ $# -eq 0 ]]; then 
   format="oci-archive"
   printf "\e[1;34mINFO\e[m: Format by default: $format \n"
