@@ -24,9 +24,6 @@ jobs:
           arkade version
           arkade get just
           just --version
-
-      - name: Update Readme
-        run: |
           cd ./scripts/docs/
           ./autogenerate_README.sh
           cat README.md
