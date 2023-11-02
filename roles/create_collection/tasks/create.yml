@@ -65,5 +65,5 @@
     - { src: 'playbooks/ping.yml',                         dest: '~/{{ collection_namespace }}/{{ collection_name }}/playbooks/tasks/ping.yml' }
     - { src: 'playbooks/test.yml',                         dest: '~/{{ collection_namespace }}/{{ collection_name }}/playbooks/tasks/test.yml' }
     - { src: 'scripts/prerequis/arkade.sh',                dest: '~/{{ collection_namespace }}/{{ collection_name }}/scripts/prerequis/arkade.sh' }
-    - { src: 'scripts/prerequis/load.sh',                  dest: '~/{{ collection_namespace }}/{{ collection_name }}/scripts/prerequis/load.sh' }
+    - { src: 'scripts/prerequis/podman-load.sh',           dest: '~/{{ collection_namespace }}/{{ collection_name }}/scripts/prerequis/podman-load.sh' }
     - { src: 'scripts/prerequis/Makefile',                 dest: '~/{{ collection_namespace }}/{{ collection_name }}/scripts/prerequis/Makefile' }

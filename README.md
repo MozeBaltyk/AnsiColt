@@ -13,19 +13,16 @@ It meant to be installed on WSL or any Linux developping server.
 
 What it does on your computer ?   
 - It will install AnsiColt as classic ansible collection in your $HOME/.ansible/collections directory.
-- Add usefull aliases in $HOME/.config/aliases to use the AnsiColt collection.
-- It rely on Arkade, just, gh and glab.
+- Add an alias in $HOME/.config/aliases to use the AnsiColt collection.
+- It will install Arkade, just, gh and glab.
 
-Why not use repository templates from Github ?   
-
-Currently I see four main reasons:   
+Why not use repository templates from Github ? Currently, I see four good reasons:   
 - Here, I can variabilize templates that I push 
 - This collection can be available in the Ansible-Galaxy Portal
-- Handle projects in Github and Gitlab, private or public
+- Handle projects in Github and Gitlab, private or public, but also local.
 - Handle several project's workflow (local, remote, blank).
 
-Why do I need it, there is an Ansible-galaxy command for this ? 
-yes, but it does not:
+Why do I need it, there is an Ansible-galaxy command for this ? yes, but it does not:
 - Initialize a project in your Github, then init your collection, and push it on Github.
 - Fullfill a maximum of values in the galaxy.yml and other meta data in roles.
 - Bring a structure to handles dependencies of your collection and scripts to resolv them.
@@ -50,7 +47,7 @@ the installer script will install:
 - just
 - gh / glab-cli
 - ansible-core
-- this collection and aliases...
+- this collection and alias...
 
 ## Basic installation
 

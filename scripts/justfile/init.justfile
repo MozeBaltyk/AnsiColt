@@ -91,7 +91,7 @@ _init project type repository *group:
     while true; do
     read -p "Do you want to proceed with information above? (yes/no) " yn
     case $yn in 
-        yes ) printf "\e[1;32m[OK]\e[m it will proceed\n";
+        yes ) printf "\e[1;32m[OK]\e[m Let s proceed with values validated above...\n";
               break;;
         no ) echo exiting...;
              exit;;
@@ -100,10 +100,10 @@ _init project type repository *group:
     done
 
     # Create project on repository
-    number_of_projects_found=$( eval "${CMD} repo list | grep -iw "^${project_lowercase}"| wc -l" )
+    number_of_projects_found=$( eval "${CMD} repo list | awk '{print $1}' | grep -iw "^.*/{{project}}$" | wc -l" )
 
     if (( $number_of_projects_found > 0 )); then
-        printf "\e[1;31m[ERROR]\e[m Project ${project_lowercase} already exist.\n"
+        printf "\e[1;31m[ERROR]\e[m Project {{project}} already exist.\n"
         exit 1
     else
         printf "\e[1;34m[INFO]\e[m ${CMD} repo create --{{type}} ${project_to_create}\n"

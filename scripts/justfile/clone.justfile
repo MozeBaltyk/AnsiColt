@@ -61,7 +61,7 @@ _clone project repository:
     printf "\e[1;34m[INFO]\e[m Connected to {{repository}} with ${user}\n"
 
     # Create project on repository
-    number_of_projects_found=$( eval "${CMD} repo list | grep -iw "^.*/{{ project }}"| wc -l" )
+    number_of_projects_found=$( eval "${CMD} repo list | awk '{print $1}' | grep -iw "^.*/{{ project }}$" | wc -l" )
 
     if (( $number_of_projects_found == 0 )); then
         printf "\e[1;31m[ERROR]\e[m Project {{ project }} does not exist in your repository: {{repository}}.\n"

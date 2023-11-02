@@ -23,6 +23,7 @@ _help:
     @printf "\n"
     @printf "EXAMPLE\n"
     @printf "     colt REPOSITORY=gitlab.com TYPE=public init AweSome DreamTEAM\n"
+    @printf "     export REPOSITORY=gitlab.example.com; colt init AweSome DreamTEAM\n"
 
 # Precheck synthax
 _precheck_collection NAME:
