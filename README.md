@@ -79,17 +79,16 @@ DESCRIPTION
      Arguments without '*' in front are mandatory, the one without are not mandatory. Default variables can be redefined before the recipe.
 
 Available recipes:
-    list                         # List all your configured repositories.
-    init PROJECT *GROUP          # Create a new ansible collection on repository.
-    role GROUP PROJECT ROLE      # Create a new ansible role inside an existing collection.
-    release PROJECT *VERSION     # Release collection on your repository to the given version in command or in galaxy.yml.
-    clone PROJECT                # Clone a project from repository keeping directory structure for ansible.
-    clone_all *GROUP             # Git clone all projects from your repository, or if argument provided only from specific group.
-    install PROJECT *VERSION     # Install a ansible collection. (if PROJECT is an artifact .tar.gz install local)
-    blank PROJECT *GROUP         # Create a new empty project on remote repository.
-    local PROJECT NAMESPACE      # Create a new ansible collection on localhost (not on repository like function below).
-    build PROJECT NAMESPACE      # Build collection locally.
-    test PROJECT ROLE *NAMESPACE # Test
+    list                     # List all your configured repositories.
+    init PROJECT *GROUP      # Create a new ansible collection on repository.
+    role GROUP PROJECT ROLE  # Create a new ansible role inside an existing collection.
+    release PROJECT *VERSION # Release collection on your repository to the given version in command or in galaxy.yml.
+    clone PROJECT            # Clone a project from repository keeping directory structure for ansible.
+    clone_all *GROUP         # Git clone all projects from your repository, or if argument provided only from specific group.
+    install PROJECT *VERSION # Install a ansible collection. (if PROJECT is an artifact .tar.gz install local)
+    blank PROJECT *GROUP     # Create a new empty project on remote repository.
+    local PROJECT NAMESPACE  # Create a new ansible collection on localhost (not on repository like function below).
+    build PROJECT NAMESPACE  # Build collection locally.
 
 DEFAULT VARIABLES
      REPOSITORY = github.com
