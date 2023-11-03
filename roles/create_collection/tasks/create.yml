@@ -51,7 +51,7 @@
     - { src: 'collections/meta/runtime.yml.j2',            dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/runtime.yml' }
     - { src: 'collections/meta/execution-environment.yml', dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/execution-environment.yml' }
     - { src: 'collections/meta/ee-arkade.txt',             dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/ee-arkade.txt' }
-    - { src: 'collections/meta/ee-bindep.txt',             dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/ee-bindep.txt' }
+    - { src: 'collections/meta/ee-bindeps.txt',             dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/ee-bindeps.txt' }
     - { src: 'collections/meta/ee-images.txt',             dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/ee-images.txt' }
     - { src: 'collections/meta/ee-requirements.txt',       dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/ee-requirements.txt' }
     - { src: 'collections/meta/ee-requirements.yml',       dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/ee-requirements.yml' }

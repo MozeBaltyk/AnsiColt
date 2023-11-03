@@ -2,10 +2,12 @@
 .govmomi
 .terraform*
 terraform.tfstate*
-**/roles/**/files/images/*
+# Workstation 
 .DS_Store
 .vscode
-
+# loaded images
+**/roles/**/files/images/*
+images
 # Galaxy artifacts.
 *.tar.gz
 *.zip

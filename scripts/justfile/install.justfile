@@ -52,7 +52,7 @@ _install project repository *version:
         project_lowercase=$(echo ${project_found} | tr '[:upper:]' '[:lower:]')
         
         #Ansible Namespace can be the repo group/user or can be directly in the project name. ex: ansible.posix
-        # may should I use URL/galaxy.yml
+        # should I use URL/galaxy.yml ?
         project_group=$(echo ${project_found} | awk -F'/' '{print $1}')
         project_name=$(echo ${project_found} | awk -F'/' '{print $2}')
         ansible_namespace=$( [[ {{ project }} = *[[:punct:]]* ]] && echo {{ project }} | awk -F"." '{print $1}' || echo ${project_group} )
@@ -71,8 +71,48 @@ _install project repository *version:
         fi
     fi
 
-    # Install dependencies
+    # Install all dependencies
 
     ## Get the path of this collection:
     user_collection_path=$(ansible-galaxy collection list ${ansible_namespace_lowercase}.${collection_name_lowercase} | awk '/^#/ {print $2}')
     collection_path="${user_collection_path}/${ansible_namespace_lowercase}/${collection_name_lowercase}"
+    
+    # collections requirements.yml
+    if [ -f ${collection_path}/meta/ee-requirements.yml ]; then
+      printf "\e[1;34m[INFO]\e[m ## Install Ansible Collections ##\n"
+      ansible-galaxy install -r ${collection_path}/meta/ee-requirements.yml
+      printf "\e[1;32m[OK]\e[m Ansible Collections installed.\n"
+    else
+      printf "\e[1;34m[INFO]\e[m No ${collection_path}/meta/ee-requirements.yml...\n"
+    fi
+
+    # Pythons requirements.txt
+    if [ -f ${collection_path}/meta/ee-requirements.txt ]; then
+      printf "\e[1;34m[INFO]\e[m ## Install Pip packages ##\n"
+      curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | python3
+      python3 -m pip install -r ${collection_path}/meta/ee-requirements.txt
+      printf "\e[1;32m[OK]\e[m Pip packages installed.\n"
+    else
+      printf "\e[1;34m[INFO]\e[m No ${collection_path}/meta/ee-requirements.txt...\n"
+    fi
+
+    # rpm/dpkg bindep.txt
+    if [ -f ${collection_path}/meta/ee-bindeps.txt ]; then
+      [ -f /etc/redhat-release ] && PKG_MANAGER="yum"
+      [ -f /etc/debian_version ] && PKG_MANAGER="apt-get"
+      printf "\e[1;34m[INFO]\e[m ## Install Bindeps package ##\n"
+      python3 -m pip install bindep
+      printf "\e[1;34m[INFO]\e[m ## Install Bindeps dependencies ##\n"
+      for i in $( python3 -m bindep -bf ${collection_path}/meta/ee-bindeps.txt ); do echo "### $i ###"; sudo $(PKG_MANAGER) install -y $i; done
+      printf "\e[1;32m[OK]\e[m All packages installed.\n"
+    else
+      printf "\e[1;34m[INFO]\e[m No ${collection_path}/meta/ee-bindeps.txt...\n"
+    fi
+
+    # Arkade package
+    for line in $(cat ${collection_path}/meta/ee-arkade.txt | egrep -v "#|^$" ); do
+      arkade get --progress=false ${line} > /dev/null
+    done
+    printf "\e[1;34m[INFO]\e[m Following packages were installed in ~/.arkade/bin : \n"
+    ls -l $HOME/.arkade/bin
+
