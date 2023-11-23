@@ -1,5 +1,5 @@
 ---
-global_collection_namespace: "{{ namespace }}"
+global_collection_namespace: "{{ namespace_collection }}"
 global_collection_name: "{{ project }}"
 global_author_email: "{{ email | default('') }}"
 global_collection_description: "{{ description | default('') }}"

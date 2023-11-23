@@ -59,7 +59,7 @@ role GROUP PROJECT ROLE:
     ansible-playbook playbooks/tasks/createRole.yml \
     -e role="{{ROLE}}" \
     -e project="{{PROJECT}}" \
-    -e namespace="{{GROUP}}" \
+    -e namespace_collection="{{GROUP}}" \
     -e email="${email}"
 
 # Release collection on your repository to the given version in command or in galaxy.yml.
@@ -95,7 +95,7 @@ local PROJECT NAMESPACE:
     @just _precheck_collection {{PROJECT}}
 
     #!/usr/bin/env bash
-    ansible-playbook playbooks/tasks/createCollection.yml -e namespace="{{NAMESPACE}}" -e project="{{PROJECT}}"
+    ansible-playbook playbooks/tasks/createCollection.yml -e namespace_collection="{{NAMESPACE}}" -e project="{{PROJECT}}"
 
 # Build collection locally.
 build PROJECT NAMESPACE:
