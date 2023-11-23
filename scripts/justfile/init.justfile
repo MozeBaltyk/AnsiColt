@@ -72,9 +72,9 @@ _init project type repository *group:
     # Give a description
     while true; do
     read -p "Give a description to your project :  " description 
-    case $description in 
+    case ${description} in 
         "" ) echo "You need to give a description";;
-        * ) echo "Ok, Let continue";
+        * ) echo "Your description is : ${description}";
             break;;
     esac
     done
@@ -107,7 +107,7 @@ _init project type repository *group:
         exit 1
     else
         printf "\e[1;34m[INFO]\e[m ${CMD} repo create --{{type}} ${project_to_create}\n"
-        eval "${CMD} repo create --{{type}} ${project_to_create}"
+        eval "${CMD} repo create --{{type}} ${project_to_create} --description \"${description}\""
         
         # Try first with gh/glab CLI to keep protocol
         printf "\e[1;34m[INFO]\e[m ${CMD} repo clone ${project_lowercase} ${project_path}\n"
@@ -122,11 +122,11 @@ _init project type repository *group:
         cd ${project_path}; git config --local --replace-all user.email ${email}; cd -
 
         ansible-playbook ../../playbooks/tasks/createCollection.yml \
-          -e namespace="${namespace}" \
-          -e project="{{project}}" \
-          -e email="${email}" \
-          -e description="${description}" \
-          -e repository="{{repository}}"
+          -e "namespace_collection=${namespace}" \
+          -e "project={{project}}" \
+          -e "email=${email}" \
+          -e "description=\"${description}\"" \
+          -e "repository={{repository}}"
         
         cd ${project_path}; git add -A; git commit -m "Initialisation Project ${namespace}/{{project}}"; git push
         printf "\e[1;32m[OK]\e[m Project ${project_to_create} successfully created on {{repository}},\n"
