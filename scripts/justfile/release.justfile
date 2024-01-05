@@ -135,6 +135,6 @@ _release project repository *version:
 
     # Releasing
     printf "\e[1;34m[INFO]\e[m Start Releasing version: v${version_requested}.\n"
-    git tag -a v${version_requested} -m "$(cat changelog.md)"
+    git tag -a v${version_requested} -m "$(cat CHANGELOG.md)"
     git push origin v${version_requested}
     cd ${project_path}; eval "${CMD} release create v${version_requested} -F CHANGELOG.md"
