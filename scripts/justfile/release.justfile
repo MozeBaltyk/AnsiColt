@@ -116,7 +116,7 @@ _release project repository *version:
       
       # Pause to verify CHANGELOG.md
       while true; do
-      read -p "# Do you want to git push CHANGELOG.mg as it is above and proceed with release? (yes/no) " yn
+      read -p "# Do you want to git push CHANGELOG.md as it is above and proceed with release? (yes/no) " yn
       case $yn in 
         yes ) printf "\e[1;32m[OK]\e[m Let\'s push...\n\n";
               break;;
@@ -134,5 +134,7 @@ _release project repository *version:
     fi
 
     # Releasing
-    printf "\e[1;34m[INFO]\e[m Releasing version: v${version_requested} can start.\n"
+    printf "\e[1;34m[INFO]\e[m Start Releasing version: v${version_requested}.\n"
+    git tag -a v${version_requested} -m "$(cat changelog.md)"
+    git push origin v${version_requested}
     cd ${project_path}; eval "${CMD} release create v${version_requested} -F CHANGELOG.md"
