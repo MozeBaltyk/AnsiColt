@@ -19,8 +19,6 @@ description: >
 license:
   - Apache-2.0
 
-license_file: 'LICENSE'
-
 tags:
   - devops
   - tools
