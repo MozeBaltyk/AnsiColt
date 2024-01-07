@@ -1,3 +1,6 @@
+export VERSION  ?= $(strip $(shell awk -F":" '/version/ {print $$2}' ../../galaxy.yml | tr -d "[:blank:]"))
+export REPO     ?= $(strip $(shell awk -F" " '/repository/ {print $$2}' ../../galaxy.yml | tr -d "[:blank:]"))
+
 ifneq ("$(wildcard /etc/redhat-release)","")
     PKG_MANAGER := yum
 else ifneq ("$(wildcard /etc/debian_version)","")
@@ -27,6 +30,8 @@ arkade:
 collections:
 	@printf "\e[1;34m[INFO]\e[m ## Install Ansible Collections ##\n"
 	@ansible-galaxy install -r ../../meta/ee-requirements.yml
+	@printf "\e[1;34m[INFO]\e[m ## Install $(REPO) version $(VERSION) ##\n"       
+	@ansible-galaxy collection install git+$(REPO).git,$(VERSION)
 	@printf "\e[1;32m[OK]\e[m Ansible Collections installed.\n"
 
 .PHONY: pythons
