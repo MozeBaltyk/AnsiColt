@@ -32,6 +32,9 @@ collections:
 .PHONY: pythons
 ## Install pythons packages defined in ./meta/ee-requirements.txt
 pythons:
+	@printf "\e[1;34m[INFO]\e[m ## Install Pip ##\n"
+	@curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | python3
+	@printf "\e[1;32m[OK]\e[m Pip installed.\n"
 	@printf "\e[1;34m[INFO]\e[m ## Install Pip packages ##\n"
 	@python3 -m pip install -r ../../meta/ee-requirements.txt
 	@printf "\e[1;32m[OK]\e[m Pip packages installed.\n"
