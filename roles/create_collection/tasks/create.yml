@@ -60,7 +60,7 @@
   ansible.builtin.copy:
     src: '{{ item.src }}'
     dest: '{{ item.dest }}'
-    mode: u=rw,g=r,o=r
+    mode: u=rwx,g=rx,o=r
   loop:
     - { src: 'playbooks/ping.yml',                         dest: '~/{{ collection_namespace }}/{{ collection_name }}/playbooks/tasks/ping.yml' }
     - { src: 'playbooks/test.yml',                         dest: '~/{{ collection_namespace }}/{{ collection_name }}/playbooks/tasks/test.yml' }
