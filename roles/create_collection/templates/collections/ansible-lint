@@ -12,6 +12,7 @@ exclude_paths:
   - .ansible-lint
   - .yamllint
   - scripts/
+  - playbooks/tasks # Dir for testing locally
   
 skip_list:
   - yaml[line-length]
