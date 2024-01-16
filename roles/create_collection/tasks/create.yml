@@ -39,7 +39,7 @@
   loop:
     - { src: 'plugins/inventory/hosts.yml',                dest: '~/{{ collection_namespace }}/{{ collection_name }}/plugins/inventory/hosts.yml' }
     - { src: 'collections/pre-commit-config.yaml',         dest: '~/{{ collection_namespace }}/{{ collection_name }}/.pre-commit-config.yaml' }
-    - { src: 'collections/ansible_lint',                   dest: '~/{{ collection_namespace }}/{{ collection_name }}/.ansible_lint' }
+    - { src: 'collections/ansible-lint',                   dest: '~/{{ collection_namespace }}/{{ collection_name }}/.ansible-lint' }
     - { src: 'collections/yamllint',                       dest: '~/{{ collection_namespace }}/{{ collection_name }}/.yamllint' }
     - { src: 'collections/gitignore',                      dest: '~/{{ collection_namespace }}/{{ collection_name }}/.gitignore' }
     - { src: 'collections/ansible.cfg',                    dest: '~/{{ collection_namespace }}/{{ collection_name }}/ansible.cfg' }
