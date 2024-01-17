@@ -13,8 +13,9 @@ exclude_paths:
   - .yamllint
   - scripts/
   - playbooks/tasks
-  
+
 skip_list:
-  - yaml[line-length] # max line length 
+  - yaml[line-length] # max line length
+  - var-naming[no-role-prefix] # Prefix on roles var
   - command-instead-of-shell  # Use shell only when shell functionality is required
   - experimental  # all rules tagged as experimental
