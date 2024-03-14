@@ -30,6 +30,9 @@
     - '~/{{ collection_namespace }}/{{ collection_name }}/playbooks/tasks'
     - '~/{{ collection_namespace }}/{{ collection_name }}/scripts/prerequis'
     - '~/{{ collection_namespace }}/{{ collection_name }}/meta/'
+    - '~/{{ collection_namespace }}/{{ collection_name }}/tests/inventory'
+    - '~/{{ collection_namespace }}/{{ collection_name }}/tests/playbooks'
+    - '~/{{ collection_namespace }}/{{ collection_name }}/tests/terraform'
 
 - name: Push templates inside collection
   ansible.builtin.template:
@@ -37,7 +40,6 @@
     dest: '{{ item.dest }}'
     mode: u=rw,g=r,o=r
   loop:
-    - { src: 'plugins/inventory/hosts.yml',                dest: '~/{{ collection_namespace }}/{{ collection_name }}/plugins/inventory/hosts.yml' }
     - { src: 'collections/pre-commit-config.yaml',         dest: '~/{{ collection_namespace }}/{{ collection_name }}/.pre-commit-config.yaml' }
     - { src: 'collections/ansible-lint',                   dest: '~/{{ collection_namespace }}/{{ collection_name }}/.ansible-lint' }
     - { src: 'collections/yamllint',                       dest: '~/{{ collection_namespace }}/{{ collection_name }}/.yamllint' }
@@ -51,10 +53,15 @@
     - { src: 'collections/meta/runtime.yml.j2',            dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/runtime.yml' }
     - { src: 'collections/meta/execution-environment.yml', dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/execution-environment.yml' }
     - { src: 'collections/meta/ee-arkade.txt',             dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/ee-arkade.txt' }
-    - { src: 'collections/meta/ee-bindeps.txt',             dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/ee-bindeps.txt' }
+    - { src: 'collections/meta/ee-bindeps.txt',            dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/ee-bindeps.txt' }
     - { src: 'collections/meta/ee-images.txt',             dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/ee-images.txt' }
     - { src: 'collections/meta/ee-requirements.txt',       dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/ee-requirements.txt' }
     - { src: 'collections/meta/ee-requirements.yml',       dest: '~/{{ collection_namespace }}/{{ collection_name }}/meta/ee-requirements.yml' }
+    - { src: 'tests/inventory/hosts.yml',                  dest: '~/{{ collection_namespace }}/{{ collection_name }}/tests/inventory/hosts.yml' }
+    - { src: 'tests/inventory/hosts.tpl',                  dest: '~/{{ collection_namespace }}/{{ collection_name }}/tests/inventory/hosts.tpl' }
+    - { src: 'tests/ansible.cfg',                          dest: '~/{{ collection_namespace }}/{{ collection_name }}/tests/ansible.cfg' }
+    - { src: 'tests/terraform/main.tf',                    dest: '~/{{ collection_namespace }}/{{ collection_name }}/tests/terraform/main.tf' }
+    - { src: 'tests/terraform/variables.tf',               dest: '~/{{ collection_namespace }}/{{ collection_name }}/tests/terraform/variables.tf' }
 
 - name: Push files inside collection
   ansible.builtin.copy:

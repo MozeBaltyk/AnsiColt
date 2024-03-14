@@ -46,3 +46,4 @@ build_ignore:
   - .vscode
   - '.*.tar.gz'
   - '*.zip'
+  - 'tests'
