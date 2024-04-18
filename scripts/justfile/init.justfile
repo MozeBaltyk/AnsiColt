@@ -6,7 +6,7 @@ _init project type repository *group:
     repository_type=$(curl -Lis https://{{repository}}/ | egrep -oi "<title>.*GitHub<\/title>|<title>.*GitLab<\/title>" | awk '{sub(/<\/title>/,"");print $NF}' || echo "unknown repo")
 
     # Set repo vars
-    if [[ "$repository_type" == "GitHub" ]]; then 
+    if [[ "$repository_type" == "GitHub" ]]; then
         VAR_REPO_HOST="GH_HOST"
         CLI_REPO="gh"
         CONFIG_REPO="$HOME/.config/gh"
@@ -54,7 +54,7 @@ _init project type repository *group:
     # Define your user
     user=$( eval "${CMD} auth status 2>&1" | awk '{for (I=1;I<NF;I++) if ($I == "as") print $(I+1)}' )
     printf "\e[1;34m[INFO]\e[m Connected to {{repository}} with ${user}\n"
-    
+
     # Define Project namespace if group was provides or by default take user
     if [[ "{{group}}" != "" ]]; then
       namespace="{{group}}"
@@ -67,12 +67,12 @@ _init project type repository *group:
 
     project_to_create="${namespace}/{{project}}"
     project_path="$HOME/${project_to_create}"
-    project_lowercase=$(echo ${project_to_create} | tr '[:upper:]' '[:lower:]')  
+    project_lowercase=$(echo ${project_to_create} | tr '[:upper:]' '[:lower:]')
 
     # Give a description
     while true; do
-    read -p "Give a description to your project :  " description 
-    case ${description} in 
+    read -p "Give a description to your project :  " description
+    case ${description} in
         "" ) echo "You need to give a description";;
         * ) echo "Your description is : ${description}";
             break;;
@@ -90,7 +90,7 @@ _init project type repository *group:
     # Pause to verify information
     while true; do
     read -p "Do you want to proceed with information above? (yes/no) " yn
-    case $yn in 
+    case $yn in
         yes ) printf "\e[1;32m[OK]\e[m Let s proceed with values validated above...\n";
               break;;
         no ) echo exiting...;
@@ -108,7 +108,7 @@ _init project type repository *group:
     else
         printf "\e[1;34m[INFO]\e[m ${CMD} repo create --{{type}} ${project_to_create}\n"
         eval "${CMD} repo create --{{type}} ${project_to_create} --description \"${description}\""
-        
+
         # Try first with gh/glab CLI to keep protocol
         printf "\e[1;34m[INFO]\e[m ${CMD} repo clone ${project_lowercase} ${project_path}\n"
         eval "${CMD} repo clone ${project_lowercase} ${project_path}" || {
@@ -118,8 +118,8 @@ _init project type repository *group:
         }
 
         # Set user/email in git local otherwise the push are going to be with your global user.
-        cd ${project_path}; git config --local --replace-all user.name ${user}; cd -
-        cd ${project_path}; git config --local --replace-all user.email ${email}; cd -
+        cd ${project_path}; git config --local user.name ${user}; cd -
+        cd ${project_path}; git config --local user.email ${email}; cd -
 
         ansible-playbook ../../playbooks/tasks/createCollection.yml \
           -e "namespace_collection=${namespace}" \
@@ -127,7 +127,7 @@ _init project type repository *group:
           -e "email=${email}" \
           -e "description=\"${description}\"" \
           -e "repository={{repository}}"
-        
+
         cd ${project_path}; git add -A; git commit -m "Initialisation Project ${namespace}/{{project}}"; git push
         printf "\e[1;32m[OK]\e[m Project ${project_to_create} successfully created on {{repository}},\n"
         printf "     and present on localhost:${project_path} with git config user.name equal to ${user}.\n"
