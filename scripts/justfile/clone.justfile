@@ -2,13 +2,13 @@ set shell := ["bash", "-euc"]
 
 # Clone a project from repository keeping directory structure for ansible.
 _clone project repository:
-    #!/usr/bin/env bash    
+    #!/usr/bin/env bash
     repository_type=$(curl -Lis https://{{repository}}/ | egrep -oi "<title>.*GitHub<\/title>|<title>.*GitLab<\/title>" | awk '{sub(/<\/title>/,"");print $NF}' || echo "unknown repo")
-    
+
     printf "\e[1;34m[INFO]\e[m repository type: ${repository_type}.\n"
 
     # Setup repo vars
-    if [[ "$repository_type" == "GitHub" ]]; then 
+    if [[ "$repository_type" == "GitHub" ]]; then
         VAR_REPO_HOST="GH_HOST"
         CLI_REPO="gh"
         CONFIG_REPO="$HOME/.config/gh"
@@ -80,8 +80,8 @@ _clone project repository:
         }
 
         # Set user/email in git local otherwise the push are going to be with your global user.
-        cd $HOME/${project_to_clone}; git config --local --replace-all user.name ${user}; cd - 
-        cd $HOME/${project_to_clone}; git config --local --replace-all user.email ${email}; cd - 
+        cd $HOME/${project_to_clone}; git config --local user.name ${user}; cd -
+        cd $HOME/${project_to_clone}; git config --local user.email ${email}; cd -
 
     elif (( $number_of_projects_found > 1 )); then
         project_found=$( eval "${CMD} repo list  | grep -iw "^.*/{{ project }}"" )
