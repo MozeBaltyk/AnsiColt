@@ -72,7 +72,7 @@ NAME
      AnsiColt - kickstart Ansible Collection
 
 SYNOPSIS
-     colt [vars=value] recipe [arguments]... 
+     colt [vars=value] recipe [arguments]...
 
 DESCRIPTION
      'colt' allow you to trigger recipes which are describes below. The arguments need to follow the order as described below.
@@ -106,7 +106,7 @@ Workflow with a remote repository :
 
 - `colt role`       to create new roles in your project.
 
-- `colt release`    release your project to version given in command or found in galaxy.yml.
+- `colt release`    release your project to version given in command or found in galaxy.yml (only for repository, it does not publish to ansible-galaxy).
 
 - `colt clone`      reimport the project in the right directory to stay compliant with colt.
 
