@@ -1,11 +1,11 @@
-#!/usr/bin/bash 
+#!/usr/bin/bash
 #
 # For the README.md
-# sh -c "$(curl -fsSL https://raw.githubusercontent.com/MozeBaltyk/AnsiColt/main/scripts/install.sh)" 
+# sh -c "$(curl -fsSL https://raw.githubusercontent.com/MozeBaltyk/AnsiColt/main/scripts/install.sh)"
 #
 
 aliases='
-alias colt="just -f $HOME/.ansible/collections/ansible_collections/MozeBaltyk/AnsiColt/justfile"
+alias colt="just -f $HOME/.ansible/collections/ansible_collections/mozebaltyk/ansicolt/justfile"
 '
 
 find_home_profile(){
@@ -255,7 +255,7 @@ install_glab(){
             printf "\e[1;34m[INFO]\e[m glab is up-to-date.\n"
         fi
     fi
-    
+
     find_home_profile
 
     if ! grep -qF "export PATH=\$PATH:\$HOME/.glab/bin" "$HOME_PROFILE"; then
@@ -315,7 +315,7 @@ install_aliases() {
 }
 
 
-# Succes Message 
+# Succes Message
 print_success() {
   printf '%s    ___  %s         %s        %s    _ %s   ______%s        %s    __%s   __  %s\n' $FMT_RAINBOW $FMT_RESET
   printf '%s   /   | %s   ____  %s   _____%s   (_)%s  / ____/%s  ____  %s   / /%s  / /_ %s\n' $FMT_RAINBOW $FMT_RESET
