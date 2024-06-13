@@ -13,7 +13,6 @@ on:
 jobs:
   release:
     name: Release to Galaxy
-    needs: update-version
     runs-on: ubuntu-latest
     if: github.repository == 'mozebaltyk/ansicolt'
     permissions:
