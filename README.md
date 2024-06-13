@@ -72,7 +72,7 @@ NAME
      AnsiColt - kickstart Ansible Collection
 
 SYNOPSIS
-     colt [vars=value] recipe [arguments]...
+     colt [vars=value] recipe [arguments]... 
 
 DESCRIPTION
      'colt' allow you to trigger recipes which are describes below. The arguments need to follow the order as described below.
@@ -96,6 +96,7 @@ DEFAULT VARIABLES
 
 EXAMPLE
      colt REPOSITORY=gitlab.com TYPE=public init AweSome DreamTEAM
+     export REPOSITORY=gitlab.example.com; colt init AweSome DreamTEAM
 ```
 <!-- END -->
 
