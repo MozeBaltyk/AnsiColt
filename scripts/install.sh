@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 #
 # For the README.md
-# sh -c "$(curl -fsSL https://raw.githubusercontent.com/MozeBaltyk/AnsiColt/main/scripts/install.sh)"
+# bash -c "$(curl -fsSL https://raw.githubusercontent.com/MozeBaltyk/AnsiColt/main/scripts/install.sh)"
 #
 
 aliases='
@@ -291,7 +291,7 @@ install_gh(){
 install_ansicolt() {
   printf "\e[1;33m[CHANGE]\e[m Installing ansiColt...\n"
   ansible-galaxy collection install git+https://github.com/MozeBaltyk/AnsiColt.git > /dev/null 2>&1
-  printf "\e[1;32m[OK]\e[m AnsiColt collection was installed."
+  printf "\e[1;32m[OK]\e[m AnsiColt collection was installed.\n"
   ansible-galaxy collection list MozeBaltyk.AnsiColt
 }
 
