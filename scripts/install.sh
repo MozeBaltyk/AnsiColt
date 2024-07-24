@@ -201,7 +201,7 @@ install_just() {
   else
       if [ -f ~/.arkade/bin/just ]; then
           printf "\e[1;33m[CHANGE]\e[m just is not found. Installing...\n"
-          arkade get just
+          arkade get just --quiet && export PATH=$PATH:$HOME/.arkade/bin/
       else
           printf "\e[1;31m[ERROR]\e[m arkade is not installed. Please install arkade first.\n"
       fi
