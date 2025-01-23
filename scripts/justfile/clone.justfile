@@ -64,7 +64,29 @@ _clone project repository:
     number_of_projects_found=$( eval "${CMD} repo list | awk '{print $1}' | grep -iw "^.*/{{ project }}$" | wc -l" )
 
     if (( $number_of_projects_found == 0 )); then
-        printf "\e[1;31m[ERROR]\e[m Project {{ project }} does not exist in your repository: {{repository}}.\n"
+        group=$(echo {{ project }} | awk -F "/" '{print $1}')
+        look_for_it_in_group=$( eval "${CMD} repo list ${group} | awk '{print $1}' | grep -iw "^.*{{ project }}$" | wc -l" )
+        
+        if (( $look_for_it_in_group == 1 )); then
+          project_found=$( eval "${CMD} repo list ${group} | grep -iw "{{ project }}" | awk '{print $1;}'" )
+          project_to_clone=$(echo ${project_found} | awk '{print $1;}')
+          project_lowercase=$(echo ${project_to_clone} | tr '[:upper:]' '[:lower:]')
+          printf "\e[1;32m[OK]\e[m Project ${project_to_clone} exist in group ${group}, Let\'s clone it... \n"
+
+          # Try first with gh/glab CLI to keep protocol
+          printf "\e[1;34m[INFO]\e[m ${CMD} repo clone ${project_lowercase} $HOME/${project_to_clone} -- --recursive\n"
+          eval "${CMD} repo clone ${project_lowercase} $HOME/${project_to_clone} -- --recursive" || {
+            # if failed, retry with git clone on https
+            printf "\e[1;34m[INFO]\e[m Second trial with in https: git clone https://{{repository}}/${project_lowercase}.git $HOME/${project_to_clone}\n"
+            git clone --recursive https://{{repository}}/${project_lowercase}.git $HOME/${project_to_clone}
+          }
+
+          # Set user/email in git local otherwise the push are going to be with your global user.
+          cd $HOME/${project_to_clone}; git config --local user.name ${user}; cd -
+          cd $HOME/${project_to_clone}; git config --local user.email ${email}; cd -
+        else        
+          printf "\e[1;31m[ERROR]\e[m Project {{ project }} does not exist in your repository: {{repository}}.\n"
+        fi
     elif (( $number_of_projects_found == 1 )); then
         project_found=$( eval "${CMD} repo list | grep -iw "^.*/{{ project }}"" )
         project_to_clone=$(echo ${project_found} | awk '{print $1;}')
