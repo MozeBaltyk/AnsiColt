@@ -210,7 +210,7 @@ install_just() {
 
 
 # Install ansible-core
-install_ansible() {
+install_ansible(){
   if command -v ansible >/dev/null 2>&1; then
       printf "\e[1;34m[INFO]\e[m ansible is already installed.\n"
   else
@@ -221,6 +221,20 @@ install_ansible() {
         sudo apt install -y ansible-core
       fi
   fi
+}
+
+# Install jq
+install_jq(){
+  if command -v jq >/dev/null 2>&1; then
+    printf "\e[1;34m[INFO]\e[m jq is already installed.\n"
+  else
+    printf "\e[1;33m[CHANGE]\e[m jq is not found. Installing jq package...\n"
+    if [ -f /etc/redhat-release ] ; then
+      sudo dnf install -y jq
+    elif [ -f /etc/debian_version ] ; then
+      sudo apt install -y jq
+    fi
+  fi  
 }
 
 # Install glab-cli
