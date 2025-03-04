@@ -224,17 +224,19 @@ install_ansible(){
 }
 
 # Install jq
-install_jq(){
+install_jq_yq(){
   if command -v jq >/dev/null 2>&1; then
     printf "\e[1;34m[INFO]\e[m jq is already installed.\n"
   else
     printf "\e[1;33m[CHANGE]\e[m jq is not found. Installing jq package...\n"
-    if [ -f /etc/redhat-release ] ; then
-      sudo dnf install -y jq
-    elif [ -f /etc/debian_version ] ; then
-      sudo apt install -y jq
-    fi
-  fi  
+    arkade get jq --quiet && export PATH=$PATH:$HOME/.arkade/bin/
+  fi
+  if command -v yq >/dev/null 2>&1; then
+    printf "\e[1;34m[INFO]\e[m yq is already installed.\n"
+  else
+    printf "\e[1;33m[CHANGE]\e[m yq is not found. Installing yq package...\n"
+    arkade get yq --quiet && export PATH=$PATH:$HOME/.arkade/bin/
+  fi 
 }
 
 # Install glab-cli
@@ -353,6 +355,7 @@ setup_color
 install_arkade
 install_just
 install_ansible
+install_jq_yq
 install_glab
 install_gh
 install_ansicolt
