@@ -244,11 +244,11 @@ install_glab(){
         LATEST_VERSION_URL="https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/releases"
         LATEST_VERSION=$(curl -s "${LATEST_VERSION_URL}" | jq -r '.[0].tag_name' | sed 's/^v//')
         URL="https://gitlab.com/gitlab-org/cli/-/releases"
-        DOWNLOAD_URL="${URL}"/v"${LATEST_VERSION}"/downloads/glab_"${LATEST_VERSION}"_Linux_x86_64.tar.gz
+        DOWNLOAD_URL="${URL}"/v"${LATEST_VERSION}"/downloads/glab_"${LATEST_VERSION}"_linux_amd64.tar.gz
         curl -LO "${DOWNLOAD_URL}" >/dev/null 2>&1
-        tar xzf glab_"${LATEST_VERSION}"_Linux_x86_64.tar.gz
+        tar xzf glab_"${LATEST_VERSION}"_linux_amd64.tar.gz
         sudo mv bin/glab /usr/local/bin/
-        rm -rf bin glab_"${LATEST_VERSION}"_Linux_x86_64.tar.gz
+        rm -rf bin glab_"${LATEST_VERSION}"_linux_amd64.tar.gz
         printf "\e[1;32m[OK]\e[m glab has been installed.\n"
     else
         printf "\e[1;34m[INFO]\e[m glab is already installed.\n"
@@ -259,11 +259,11 @@ install_glab(){
         if [[ "$CURRENT_VERSION" != "$LATEST_VERSION" ]]; then
             printf "\e[1;33m[CHANGE]\e[m New version of glab found. Updating...\n"
             URL="https://gitlab.com/gitlab-org/cli/-/releases"
-            DOWNLOAD_URL="${URL}"/v"${LATEST_VERSION}"/downloads/glab_"${LATEST_VERSION}"_Linux_x86_64.tar.gz
+            DOWNLOAD_URL="${URL}"/v"${LATEST_VERSION}"/downloads/glab_"${LATEST_VERSION}"_linux_amd64.tar.gz
             curl -LO "${DOWNLOAD_URL}" >/dev/null 2>&1
-            tar xzf glab_"${LATEST_VERSION}"_Linux_x86_64.tar.gz
+            tar xzf glab_"${LATEST_VERSION}"_linux_amd64.tar.gz
             sudo mv bin/glab /usr/local/bin/
-            rm -rf bin glab_"${LATEST_VERSION}"_Linux_x86_64.tar.gz
+            rm -rf bin glab_"${LATEST_VERSION}"_linux_amd64.tar.gz
             printf "\e[1;32m[OK]\e[m glab has been updated to version v${LATEST_VERSION}.\n"
         else
             printf "\e[1;34m[INFO]\e[m glab is up-to-date.\n"
