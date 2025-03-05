@@ -14,6 +14,7 @@ _clone_all repository group='NULL':
         CONFIG_REPO="$HOME/.config/gh"
         CONFIG_FILE="${CONFIG_REPO}/hosts.yml"
         YQ_SEARCH=".\"{{repository}}\".email"
+        YQ_SEARCH_USER=".\"{{repository}}\".user"
         # Setup command to eval
         CMD="${VAR_REPO_HOST}={{repository}} ${CLI_REPO}"
         #https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps#available-scopes
@@ -24,6 +25,7 @@ _clone_all repository group='NULL':
         CONFIG_REPO="$HOME/.config/glab-cli"
         CONFIG_FILE="${CONFIG_REPO}/config.yml"
         YQ_SEARCH=".hosts.\"{{repository}}\".email"
+        YQ_SEARCH_USER=".hosts.\"{{repository}}\".user"
         # Setup command to eval
         CMD="NO_COLORS=1 NO_PROMPT=1 ${VAR_REPO_HOST}={{repository}} ${CLI_REPO}"
     else
@@ -54,6 +56,9 @@ _clone_all repository group='NULL':
 
     # Define your user
     user=$( eval "${CMD} auth status 2>&1" | awk '{for (I=1;I<NF;I++) if ($I == "as") print $(I+1)}' )
+    if [ -z $user ]; then
+      user=$(yq eval ${YQ_SEARCH_USER} ${CONFIG_FILE})
+    fi
     printf "\e[1;34m[INFO]\e[m Connected to {{repository}} with ${user}\n"
 
     # Create project on repository
@@ -77,6 +82,7 @@ _clone_all repository group='NULL':
             }
 
             # Set user/email in git local otherwise the push are going to be with your global user.
+            printf "\e[1;34m[INFO]\e[m Set user/email in project"
             cd $HOME/${project_to_clone}; git config --local user.name ${user}; cd -
             cd $HOME/${project_to_clone}; git config --local user.email ${email}; cd -
         done
@@ -96,6 +102,7 @@ _clone_all repository group='NULL':
             }
 
             # Set user/email in git local otherwise the push are going to be with your global user.
+            printf "\e[1;34m[INFO]\e[m Set user/email in project"
             cd $HOME/${project_to_clone}; git config --local user.name ${user}; cd -
             cd $HOME/${project_to_clone}; git config --local user.email ${email}; cd -
         done
