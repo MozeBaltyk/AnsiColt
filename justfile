@@ -42,6 +42,10 @@ _precheck_role NAME:
         exit 1
     fi
 
+# Login to your repository.
+login:
+    @just -f scripts/justfile/login.justfile _login {{REPOSITORY}}
+
 # List all your configured repositories.
 list:
     @just -f scripts/justfile/list.justfile _list
