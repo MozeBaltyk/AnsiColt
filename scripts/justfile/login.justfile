@@ -28,7 +28,7 @@ _login repository:
         CONFIG_FILE="${CONFIG_REPO}/config.yml"
         YQ_SEARCH=".hosts.\"{{repository}}\".user"
         # Setup command to eval
-        CMD="NO_COLORS=1 NO_PROMPT=1 glab auth login -h {{repository}} "
+        CMD="glab auth login -h {{repository}} "
         OPTIONS=""
     else
         printf "\e[1;31m[ERROR]\e[m unknown repository or not reachable.\n"
@@ -37,6 +37,7 @@ _login repository:
 
     # Setup command to eval
     printf "CMD: \e[1;32m ${CMD} \e[m\n"
+    eval "${CMD}"
 
     # Apply only to Github
     if [[ "$repository_type" == "GitHub" ]]; then
